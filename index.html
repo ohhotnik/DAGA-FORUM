@@ -1,398 +1,110 @@
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>KARATEL TEST</title>
-
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;background:#0b0b0e;color:white;
- font-family:Arial,sans-serif;
-}
-button,input{font:inherit}
-button{
- cursor:pointer;border:0;border-radius:8px;
- padding:12px 17px;font-weight:bold;
-}
-.orange{background:#ff7900;color:white}
-.dark{background:#292929;color:white}
-button:hover{filter:brightness(1.15)}
-
-/* ЗАГРУЗКА */
-#loading{
- position:fixed;inset:0;z-index:99999;
- background:#080808;
- display:flex;align-items:center;
- justify-content:center;
- transition:opacity .5s;
-}
-.loader{
- width:220px;padding:18px;
- text-align:center;background:#171717;
- border:1px solid #383838;border-radius:13px;
-}
-.loader-logo{font-size:21px;font-weight:900;color:#ff7900}
-.loader-emoji{font-size:27px;margin:12px;animation:bounce 1s infinite}
-.loader-text{font-size:12px;color:#aaa}
-.bar{height:6px;background:#333;border-radius:20px;overflow:hidden}
-.fill{height:100%;width:0;background:#ff7900;transition:width .2s}
-@keyframes bounce{50%{transform:translateY(-6px)}}
-
-/* ШАПКА */
-header{
- background:#151515;border-bottom:2px solid #ff7900;
- padding:17px 4%;
- display:flex;align-items:center;
- justify-content:space-between;flex-wrap:wrap;gap:15px;
-}
-.logo{font-size:25px;font-weight:900;color:#ff7900}
-nav{display:flex;gap:8px;flex-wrap:wrap}
-nav button{background:#292929;color:white}
-
-/* СТРАНИЦА */
-.container{width:94%;max-width:1350px;margin:25px auto}
-.hero{
- padding:40px 25px;
- border-radius:14px;
- background:linear-gradient(120deg,#38200e,#171717);
- border:1px solid #57351b;
-}
-.hero h1{font-size:35px;color:#ff7900}
-.section{
- padding:23px;background:#151515;
- border:1px solid #333;border-radius:12px;
- margin-top:20px;
-}
-.section h2{color:#ff7900}
-.cards{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:15px;
-}
-.card{
- padding:20px;background:#202020;
- border:1px solid #393939;border-radius:10px;
-}
-.card h3{color:#ff7900}
-.muted{color:#999;font-size:13px}
-.status{color:#42dc81}
-.hidden{display:none!important}
-
-/* АВТОРИЗАЦИЯ */
-.auth-box{max-width:430px;margin:35px auto}
-.auth-box input{
- width:100%;padding:14px;margin:7px 0;
- border:1px solid #444;background:#222;
- color:white;border-radius:8px;outline:none;
-}
-.auth-box button{width:100%;margin-top:9px}
-footer{text-align:center;padding:30px;color:#777}
-</style>
-</head>
-
-<body>
-
-<!-- ЭКРАН ЗАГРУЗКИ -->
-<div id="loading">
- <div class="loader">
-  <div class="loader-logo">KARATEL TEST</div>
-  <div class="loader-emoji" id="emoji">🚗</div>
-  <p class="loader-text" id="loadText">Загружаем форум...</p>
-  <div class="bar"><div class="fill" id="progress"></div></div>
- </div>
-</div>
-
-<header>
- <div class="logo">KARATEL TEST</div>
- <nav>
-  <button onclick="showPage('home')">🏠 Главная</button>
-  <button onclick="showPage('forum')">💬 Форум</button>
-  <button id="loginButton" onclick="showPage('auth')">🔑 Войти</button>
-  <button id="registerButton" onclick="showPage('auth')">📝 Регистрация</button>
-  <button id="logoutButton" class="hidden" onclick="logout()">🚪 Выйти</button>
- </nav>
-</header>
-
-<!-- РЕГИСТРАЦИЯ И ВХОД -->
-<div id="auth" class="container hidden">
- <div class="section auth-box">
-  <h2>👤 Аккаунт KARATEL</h2>
-
-  <input id="nickname" placeholder="Ваш игровой ник">
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Пароль">
-
-  <button class="orange" onclick="register()">📝 Регистрация</button>
-  <button class="dark" onclick="login()">🔑 Войти</button>
-
-  <p id="message" class="muted"></p>
- </div>
-</div>
-
-<!-- ПРОФИЛЬ -->
-<div id="profile" class="container hidden">
- <div class="section">
-  <h2>👤 Мой профиль</h2>
-  <h3 id="profileNick"></h3>
-  <p id="profileRank"></p>
-  <p class="status">● В сети</p>
- </div>
-</div>
-
-<!-- ГЛАВНАЯ -->
-<main id="home" class="container">
- <div class="hero">
-  <h1>🔥 KARATEL TEST</h1>
-  <h2>Игровой форум</h2>
-  <p>Добро пожаловать в наше игровое сообщество!</p>
-  <button class="orange" onclick="showPage('forum')">
-   Перейти на форум →
-  </button>
- </div>
-
- <div class="section">
-  <h2>🏙️ Разделы форума</h2>
-  <div class="cards">
-   <div class="card">
-    <h3>📢 Новости</h3>
-    <p>Новости и обновления проекта.</p>
-   </div>
-   <div class="card">
-    <h3>💬 Общение</h3>
-    <p>Общение между игроками.</p>
-   </div>
-   <div class="card">
-    <h3>🎮 Игровой раздел</h3>
-    <p>Игровые обсуждения.</p>
-   </div>
-   <div class="card">
-    <h3>🛠️ Поддержка</h3>
-    <p>Помощь пользователям.</p>
-   </div>
-  </div>
- </div>
-</main>
-
-<!-- ФОРУМ -->
-<div id="forum" class="container hidden">
- <div class="section">
-  <h2>💬 Форум KARATEL TEST</h2>
-  <div class="cards">
-   <div class="card">
-    <h3>📢 Новости проекта</h3>
-    <p>Объявления проекта.</p>
-   </div>
-   <div class="card">
-    <h3>👥 Игроки</h3>
-    <p>Игровое сообщество.</p>
-   </div>
    <div class="card">
     <h3>🛡️ Администрация</h3>
-    <p>Раздел администрации.</p>
+    <p>Раздел администрации</p>
    </div>
    <div class="card">
-    <h3>🎮 Black Russia</h3>
-    <p>Игровые обсуждения.</p>
+    <h3>🚗 Black Russia</h3>
+    <p>Игровые обсуждения</p>
    </div>
   </div>
  </div>
 
- <div id="developerPanel" class="section hidden">
-  <h2>👑 Панель разработчика</h2>
+ <div id="developer" class="section" style="display:none">
+  <h2>👑 Главный разработчик</h2>
   <h3>Wells_ohhotnik</h3>
-  <p>Главный разработчик KARATEL TEST</p>
-  <p>Права аккаунта подтверждаются базой Firebase.</p>
+  <p>Разработчик KARATEL TEST</p>
  </div>
 </div>
 
 <footer>KARATEL TEST © 2026</footer>
 
-<script type="module">
-import {initializeApp}
- from "https://www.gstatic.com/firebasejs/10.14.0/firebase-app.js";
+<script>
+const $ = id => document.getElementById(id);
 
-import {
- getAuth,createUserWithEmailAndPassword,
- signInWithEmailAndPassword,signOut,
- onAuthStateChanged,updateProfile
-} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+let currentNick = "";
 
-import {
- getDatabase,ref,get,set,runTransaction
-} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-database.js";
-
-/* ТВОЙ FIREBASE */
-const firebaseConfig={
- apiKey:"AIzaSyB08MJJtpW7nNPmfAXJoCxSVhJtKmHww-s",
- authDomain:"karatel-test-d4905.firebaseapp.com",
- databaseURL:"https://karatel-test-d4905-default-rtdb.firebaseio.com",
- projectId:"karatel-test-d4905",
- storageBucket:"karatel-test-d4905.firebasestorage.app",
- messagingSenderId:"1010732008881",
- appId:"1:1010732008881:web:d70e6a247b88c72c29e990",
- measurementId:"G-40CD234F0L"
-};
-
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getDatabase(app);
-
-const DEVELOPER="Wells_ohhotnik";
-
-let currentUser=null;
-
-const $=id=>document.getElementById(id);
-
-/* ЗАГРУЗКА */
-const emojis=["🚗","🏙️","🔥","🎮","🏎️","⭐","🌆","🚀"];
-const messages=[
- "Загружаем форум...",
- "Подключаем сервер...",
- "Проверяем аккаунт...",
- "Загружаем профили...",
- "Почти готово..."
-];
-
-let value=0;
-const loadingTimer=setInterval(()=>{
- value=Math.min(100,value+5);
- $("progress").style.width=value+"%";
- $("emoji").textContent=emojis[Math.floor(Math.random()*emojis.length)];
- $("loadText").textContent=messages[Math.min(4,Math.floor(value/21))];
-
- if(value>=100){
-  clearInterval(loadingTimer);
-  $("loadText").textContent="Готово!";
-  setTimeout(()=>{
-   $("loading").style.opacity="0";
-   setTimeout(()=>$("loading").remove(),500);
-  },400);
- }
-},100);
-
-/* ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ */
-window.showPage=function(page){
- $("home").classList.toggle("hidden",page!=="home");
- $("forum").classList.toggle("hidden",page!=="forum");
- $("auth").classList.toggle("hidden",page!=="auth");
-};
-
-function showMessage(message){
- $("message").textContent=message;
+function page(name) {
+ $("home").style.display = name === "home" ? "block" : "none";
+ $("forum").style.display = name === "forum" ? "block" : "none";
+ $("auth").style.display = name === "auth" ? "block" : "none";
 }
 
-/* РЕГИСТРАЦИЯ */
-window.register=async function(){
- const nick=$("nickname").value.trim();
- const email=$("email").value.trim();
- const password=$("password").value;
+function enter() {
+ const nick = $("nick").value.trim();
 
- try{
-  if(!/^[a-zA-Z0-9_]{3,20}$/.test(nick)){
-   throw Error("Ник: 3–20 символов, латиница, цифры и _");
-  }
-  if(password.length<6){
-   throw Error("Пароль должен содержать минимум 6 символов");
-  }
-
-  const credential=await createUserWithEmailAndPassword(
-   auth,email,password
-  );
-
-  const uid=credential.user.uid;
-  const nicknameKey=nick.toLowerCase();
-
-  const claim=await runTransaction(
-   ref(db,"nicknames/"+nicknameKey),
-   current=>current===null?uid:undefined
-  );
-
-  if(!claim.committed){
-   await credential.user.delete();
-   throw Error("Этот ник уже занят");
-  }
-
-  await updateProfile(credential.user,{displayName:nick});
-
-  await set(ref(db,"users/"+uid),{
-   nickname:nick,
-   email:email,
-   role:"player",
-   createdAt:Date.now()
-  });
-
-  showMessage("Регистрация успешна!");
- }catch(error){
-  showMessage("Ошибка: "+error.message);
+ if (!nick) {
+  $("msg").textContent = "Введите ник!";
+  return;
  }
-};
 
-/* ВХОД */
-window.login=async function(){
- try{
-  await signInWithEmailAndPassword(
-   auth,
-   $("email").value.trim(),
-   $("password").value
-  );
-  showMessage("Вход выполнен!");
- }catch(error){
-  showMessage("Ошибка: "+error.message);
+ currentNick = nick;
+ showProfile();
+}
+
+function register() {
+ const nick = $("nick").value.trim();
+
+ if (!nick) {
+  $("msg").textContent = "Сначала введите ник!";
+  return;
  }
-};
 
-/* ВЫХОД */
-window.logout=async function(){
- try{
-  await signOut(auth);
-  showPage("home");
- }catch(error){
-  alert(error.message);
+ currentNick = nick;
+ showProfile();
+}
+
+function showProfile() {
+ $("playerNick").textContent = currentNick;
+
+ const isDeveloper =
+  currentNick.toLowerCase() === "wells_ohhotnik";
+
+ $("rank").textContent = isDeveloper
+  ? "👑 Главный разработчик"
+  : "🎮 Игрок";
+
+ $("developer").style.display =
+  isDeveloper ? "block" : "none";
+
+ $("profile").style.display = "block";
+ $("loginNav").style.display = "none";
+ $("logoutNav").classList.remove("hidden");
+
+ $("auth").style.display = "none";
+ page("home");
+}
+
+function logout() {
+ currentNick = "";
+ $("profile").style.display = "none";
+ $("developer").style.display = "none";
+ $("loginNav").style.display = "inline-block";
+ $("logoutNav").classList.add("hidden");
+ page("home");
+}
+
+// Экран загрузки
+const emojis = ["🚗","🏙️","🔥","🎮","🏎️","⭐"];
+let progress = 0;
+
+const timer = setInterval(() => {
+ progress += 5;
+
+ $("progress").style.width = progress + "%";
+ $("emoji").textContent =
+  emojis[Math.floor(Math.random() * emojis.length)];
+
+ if (progress >= 100) {
+  clearInterval(timer);
+
+  $("loading").style.opacity = "0";
+
+  setTimeout(() => {
+   $("loading").remove();
+  }, 500);
  }
-};
-
-/* ПРОВЕРКА АВТОРИЗАЦИИ */
-onAuthStateChanged(auth,async user=>{
- currentUser=user;
-
- if(user){
-  $("loginButton").classList.add("hidden");
-  $("registerButton").classList.add("hidden");
-  $("logoutButton").classList.remove("hidden");
-  $("profile").classList.remove("hidden");
-
-  try{
-   const snapshot=await get(ref(db,"users/"+user.uid));
-   const data=snapshot.val()||{};
-
-   const nick=data.nickname||user.displayName||"Игрок";
-   $("profileNick").textContent=nick;
-
-   const isDeveloper=data.role==="developer";
-
-   $("profileRank").textContent=
-    isDeveloper?"👑 Главный разработчик":"🎮 Игрок";
-
-   $("developerPanel").classList.toggle("hidden",!isDeveloper);
-  }catch(error){
-   $("profileNick").textContent=user.displayName||"Игрок";
-   $("profileRank").textContent="🎮 Игрок";
-   $("developerPanel").classList.add("hidden");
-  }
-
-  showPage("home");
- }else{
-  $("loginButton").classList.remove("hidden");
-  $("registerButton").classList.remove("hidden");
-  $("logoutButton").classList.add("hidden");
-  $("profile").classList.add("hidden");
-  $("developerPanel").classList.add("hidden");
-  showPage("home");
- }
-});
+}, 100);
 </script>
 
 </body>
