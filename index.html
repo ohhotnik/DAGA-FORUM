@@ -1,103 +1,63 @@
 
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KARATEL TEST — BLACK RUSSIA</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KARATEL TEST — Forum</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#0b0b0e;color:#eee;
- font-family:Arial,sans-serif;
-}
-header{
- background:#151519;border-bottom:2px solid #ff7900;
- padding:16px;display:flex;justify-content:space-between;
- align-items:center;gap:10px;flex-wrap:wrap;
-}
+body{margin:0;background:#0b0b0e;color:#eee;font-family:Arial,sans-serif}
+header{background:#17171c;border-bottom:2px solid #ff7900;padding:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 .logo{font-size:22px;font-weight:bold;color:#ff7900}
 nav{display:flex;gap:8px;flex-wrap:wrap}
-button{
- background:#ff7900;color:#111;border:0;
- padding:11px 16px;border-radius:7px;
- font-weight:bold;cursor:pointer;
-}
-button:hover{background:#ff9b38}
-.secondary{background:#29292f;color:#fff}
-main{max-width:1100px;margin:25px auto;padding:15px}
-.card{
- background:#17171c;border:1px solid #303036;
- border-radius:12px;padding:20px;margin-bottom:15px;
-}
-h1,h2,h3{margin-top:0}
+button{border:0;border-radius:7px;padding:11px 15px;background:#ff7900;color:#111;font-weight:bold;cursor:pointer}
+button:hover{background:#ffa044}
+.dark{background:#303038;color:white}
+main{max-width:1100px;margin:25px auto;padding:12px}
+.card{background:#17171c;border:1px solid #303038;border-radius:12px;padding:20px;margin-bottom:15px}
+h1,h2{margin-top:0}
 h2{color:#ff7900}
-p{color:#c7c7ce;line-height:1.5}
-input{
- display:block;width:100%;padding:14px;margin:12px 0;
- border:1px solid #41414a;border-radius:7px;
- background:#101014;color:white;font-size:16px;
-}
-a{color:#ff7900;cursor:pointer}
+p{color:#c9c9ce;line-height:1.5}
+input,select{width:100%;padding:13px;margin:9px 0;background:#101014;color:white;border:1px solid #45454d;border-radius:7px;font-size:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .hidden{display:none!important}
-.grid{
- display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:14px;
-}
-.tag{
- display:inline-block;background:#302117;color:#ff9b38;
- padding:5px 9px;border-radius:6px;font-size:12px;
-}
+.tag{display:inline-block;padding:6px 10px;background:#352416;color:#ff9b38;border-radius:6px;font-size:12px}
 .online{color:#4bdc85}
+.muted{color:#999}
+hr{border:0;border-top:1px solid #333;margin:18px 0}
+#loader{position:fixed;inset:0;background:#09090c;z-index:99;display:flex;align-items:center;justify-content:center}
+.loadbox{background:#17171c;border:1px solid #ff7900;border-radius:14px;padding:25px;text-align:center;width:230px}
+.emoji{font-size:36px;animation:jump .7s infinite alternate}
+@keyframes jump{to{transform:translateY(-8px)}}
+.progress{height:8px;background:#333;border-radius:10px;margin-top:15px;overflow:hidden}
+#bar{height:100%;width:0;background:#ff7900}
 footer{text-align:center;color:#777;padding:25px}
-
-/* Загрузка */
-#loader{
- position:fixed;inset:0;background:#09090c;z-index:1000;
- display:flex;align-items:center;justify-content:center;
- transition:opacity .5s;
-}
-.loader-box{
- width:230px;text-align:center;padding:22px;
- background:#17171c;border:1px solid #ff7900;
- border-radius:14px;
-}
-.loader-emoji{font-size:35px;animation:bounce .7s infinite alternate}
-@keyframes bounce{to{transform:translateY(-8px)}}
-.progress{
- height:8px;background:#333;border-radius:10px;
- overflow:hidden;margin-top:15px;
-}
-#progressbar{height:100%;width:0;background:#ff7900}
-#percent{color:#ff7900;margin-top:9px}
-@media(max-width:500px){
- header{justify-content:center}
- nav{justify-content:center}
- main{padding:10px}
-}
+@media(max-width:500px){header{justify-content:center}nav{justify-content:center}}
 </style>
 </head>
-
 <body>
 
 <div id="loader">
- <div class="loader-box">
-  <div class="loader-emoji" id="loaderEmoji">🔥</div>
+ <div class="loadbox">
+  <div class="emoji">🔥</div>
   <h2>KARATEL TEST</h2>
   <p>Загрузка форума...</p>
-  <div class="progress"><div id="progressbar"></div></div>
-  <div id="percent">0%</div>
+  <div class="progress"><div id="bar"></div></div>
+  <p id="loadPercent">0%</p>
  </div>
 </div>
 
 <header>
  <div class="logo">🔥 KARATEL TEST</div>
  <nav>
-  <button class="secondary" onclick="showPage('home')">Главная</button>
-  <button class="secondary" onclick="showPage('forum')">Форум</button>
-  <button id="loginNav" onclick="showPage('auth')">Войти</button>
-  <button id="logoutNav" class="hidden" onclick="logout()">Выйти</button>
+  <button class="dark" onclick="page('home')">Главная</button>
+  <button class="dark" onclick="page('forum')">Форум</button>
+  <button id="loginBtn" onclick="page('auth')">Войти в аккаунт</button>
+  <button id="profileBtn" class="hidden" onclick="page('profile')">Профиль</button>
+  <button id="devBtn" class="hidden" onclick="page('developer')">Разработчик</button>
+  <button id="logoutBtn" class="hidden dark" onclick="logout()">Выйти</button>
  </nav>
 </header>
 
@@ -106,88 +66,55 @@ footer{text-align:center;color:#777;padding:25px}
 <section id="home">
  <div class="card">
   <span class="tag">BLACK RUSSIA COMMUNITY</span>
-  <h1>Добро пожаловать на KARATEL TEST!</h1>
-  <p>Форум игрового сообщества. Общение, новости и обсуждения.</p>
-  <button onclick="showPage('forum')">Открыть форум</button>
-  <button class="secondary" onclick="showPage('auth')">Войти в аккаунт</button>
+  <h1>Главный форум KARATEL TEST</h1>
+  <p>Добро пожаловать на форум игрового сообщества!</p>
+  <button id="homeLogin" onclick="page('auth')">Войти в аккаунт</button>
+  <button id="homeForum" class="dark" onclick="page('forum')">Открыть форум</button>
  </div>
-
  <div class="grid">
-  <div class="card">
-   <h2>📰 Новости</h2>
-   <p>Новости и объявления сообщества.</p>
-   <button onclick="showPage('news')">Открыть</button>
-  </div>
-  <div class="card">
-   <h2>💬 Общение</h2>
-   <p>Общение участников форума.</p>
-   <button onclick="showPage('forum')">Открыть</button>
-  </div>
-  <div class="card">
-   <h2>👥 Участники</h2>
-   <p>Информация о профиле и статусе.</p>
-   <button onclick="showPage('profile')">Мой профиль</button>
-  </div>
+  <div class="card"><h2>📢 Новости</h2><p>Новости проекта и объявления.</p><button onclick="page('news')">Открыть</button></div>
+  <div class="card"><h2>🎮 Игровой раздел</h2><p>Обсуждение Black Russia.</p><button onclick="page('forum')">Открыть</button></div>
+  <div class="card"><h2>👥 Участники</h2><p>Профили и ранги игроков.</p><button onclick="page('profile')">Мой профиль</button></div>
  </div>
 </section>
 
 <section id="forum" class="hidden">
  <div class="card">
   <h1>Форум</h1>
-  <p>Разделы KARATEL TEST</p>
+  <p>Разделы сообщества KARATEL TEST</p>
  </div>
  <div class="grid">
-  <div class="card">
-   <h2>📢 Государство</h2>
-   <p>Новости и обсуждения государства.</p>
-   <span class="tag">Раздел форума</span>
-  </div>
-  <div class="card">
-   <h2>🎮 Игровой раздел</h2>
-   <p>Обсуждение Black Russia.</p>
-   <span class="tag">Раздел форума</span>
-  </div>
-  <div class="card">
-   <h2>🛠 Поддержка</h2>
-   <p>Вопросы и помощь участникам.</p>
-   <span class="tag">Раздел форума</span>
-  </div>
-  <div class="card">
-   <h2>👮 Администрация</h2>
-   <p>Информация о команде сообщества.</p>
-   <span class="tag">Раздел форума</span>
-  </div>
+  <div class="card"><h2>🏛 Государство</h2><p>Государственные организации и обсуждения.</p></div>
+  <div class="card"><h2>🚔 МВД</h2><p>Обсуждение работы организации.</p></div>
+  <div class="card"><h2>⚖️ Правительство</h2><p>Новости и обсуждения.</p></div>
+  <div class="card"><h2>🎮 Игровой раздел</h2><p>Вопросы по игре Black Russia.</p></div>
+  <div class="card"><h2>🛠 Техническая поддержка</h2><p>Помощь участникам форума.</p></div>
+  <div class="card"><h2>👮 Администрация</h2><p>Раздел администрации сообщества.</p></div>
  </div>
 </section>
 
 <section id="news" class="hidden">
- <div class="card">
-  <h1>Новости</h1>
-  <p>Добро пожаловать на форум KARATEL TEST.</p>
- </div>
+ <div class="card"><h1>Новости</h1><p>Новости и объявления KARATEL TEST.</p></div>
 </section>
 
 <section id="auth" class="hidden">
  <div class="card" style="max-width:450px;margin:auto">
-  <h1 id="authTitle">Вход</h1>
-  <p>Введи никнейм и пароль для демонстрационного входа.</p>
-  <input id="nickname" placeholder="Твой никнейм" maxlength="24">
-  <input id="password" type="password" placeholder="Пароль">
-  <button id="authButton" onclick="authenticate()">Войти</button>
-  <p style="margin-top:20px">
-   <a id="switchAuth" onclick="toggleAuth()">Нет аккаунта? Регистрация</a>
-  </p>
-  <p id="authMessage"></p>
+  <h1 id="authTitle">Войти в аккаунт</h1>
+  <input id="nickInput" placeholder="Игровой никнейм" maxlength="24">
+  <input id="passInput" type="password" placeholder="Пароль">
+  <button id="authSubmit" onclick="authenticate()">Войти</button>
+  <p><a id="authSwitch" onclick="switchAuth()">Нет аккаунта? Регистрация</a></p>
+  <p id="authError"></p>
  </div>
 </section>
 
 <section id="profile" class="hidden">
  <div class="card">
-  <h1>Мой профиль</h1>
-  <h2 id="profileNick">Гость</h2>
-  <p>Ранг: <b id="profileRank">Игрок</b></p>
-  <p>Статус: <span class="online" id="profileStatus">Не в сети</span></p>
-  <button onclick="logout()">Выйти из аккаунта</button>
+  <h1>Профиль игрока</h1>
+  <h2 id="pNick">Гость</h2>
+  <p>Ранг: <b id="pRank">Игрок</b></p>
+  <p>Титул: <b id="pTitle">Участник форума</b></p>
+  <p>Статус: <span class="online" id="pStatus">Не в сети</span></p>
  </div>
 </section>
 
@@ -196,98 +123,168 @@ footer{text-align:center;color:#777;padding:25px}
   <h1>🛠 Панель разработчика</h1>
   <span class="tag">Главный разработчик</span>
   <h2>Wells_ohhotnik</h2>
-  <p>Демонстрационная панель разработчика KARATEL TEST.</p>
+  <p>Управление демонстрационными рангами и титулами.</p>
+  <hr>
+  <h2>Выдать ранг и титул</h2>
+  <input id="targetNick" placeholder="Ник игрока">
+  <label>Выбрать ранг</label>
+  <select id="rankSelect">
+   <option>Игрок</option>
+   <option>VIP</option>
+   <option>Модератор</option>
+   <option>Администратор</option>
+   <option>Старший администратор</option>
+   <option>Заместитель главного администратора</option>
+   <option>Главный администратор</option>
+   <option>Разработчик</option>
+  </select>
+  <label>Титул игрока</label>
+  <input id="titleInput" placeholder="Например: Администратор проекта">
+  <button onclick="giveRank()">Выдать ранг и титул</button>
+  <p id="devMessage"></p>
+ </div>
+ <div class="card">
+  <h2>Мои данные</h2>
+  <p id="devCurrent"></p>
  </div>
 </section>
 
 </main>
 
-<footer>
- KARATEL TEST © 2026
-</footer>
+<footer>KARATEL TEST © 2026</footer>
 
 <script>
-let currentNick = "";
-let registerMode = false;
+let currentNick="";
+let registerMode=false;
 
-function showPage(page){
- document.querySelectorAll("main section").forEach(section=>{
-  section.classList.add("hidden");
- });
- const target=document.getElementById(page);
- if(target) target.classList.remove("hidden");
+/* Данные существуют только пока открыта страница */
+const players={};
+
+function page(id){
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ const el=document.getElementById(id);
+ if(el) el.classList.remove("hidden");
+
+ if(id==="profile") updateProfile();
+ if(id==="developer") updateDeveloper();
 }
 
-function toggleAuth(){
+function switchAuth(){
  registerMode=!registerMode;
  document.getElementById("authTitle").textContent=
-  registerMode?"Регистрация":"Вход";
- document.getElementById("authButton").textContent=
-  registerMode?"Создать аккаунт":"Войти";
- document.getElementById("switchAuth").textContent=
+  registerMode?"Регистрация":"Войти в аккаунт";
+ document.getElementById("authSubmit").textContent=
+  registerMode?"Зарегистрироваться":"Войти";
+ document.getElementById("authSwitch").textContent=
   registerMode?"Уже есть аккаунт? Войти":"Нет аккаунта? Регистрация";
- document.getElementById("authMessage").textContent="";
+ document.getElementById("authError").textContent="";
 }
 
 function authenticate(){
- const nick=document.getElementById("nickname").value.trim();
- const password=document.getElementById("password").value;
+ const nick=document.getElementById("nickInput").value.trim();
+ const pass=document.getElementById("passInput").value;
+ const error=document.getElementById("authError");
 
- if(!nick || !password){
-  document.getElementById("authMessage").textContent=
-   "Заполни никнейм и пароль.";
+ if(nick.length<2 || !pass){
+  error.textContent="Введи никнейм и пароль.";
   return;
  }
 
+ if(registerMode && players[nick]){
+  error.textContent="Этот ник уже зарегистрирован в текущем сеансе.";
+  return;
+ }
+
+ if(!players[nick]){
+  players[nick]={rank:"Игрок",title:"Участник форума"};
+ }
+
  currentNick=nick;
- document.getElementById("loginNav").classList.add("hidden");
- document.getElementById("logoutNav").classList.remove("hidden");
+ document.getElementById("passInput").value="";
+ document.getElementById("loginBtn").classList.add("hidden");
+ document.getElementById("homeLogin").classList.add("hidden");
+ document.getElementById("profileBtn").classList.remove("hidden");
+ document.getElementById("logoutBtn").classList.remove("hidden");
 
- document.getElementById("profileNick").textContent=currentNick;
- document.getElementById("profileStatus").textContent="В сети";
+ const isDev=nick.toLowerCase()==="wells_ohhotnik";
+ document.getElementById("devBtn").classList.toggle("hidden",!isDev);
 
- const isDeveloper=nick.toLowerCase()==="wells_ohhotnik";
+ if(isDev){
+  players[nick].rank="Главный разработчик";
+  players[nick].title="Главный разработчик проекта";
+ }
 
- document.getElementById("profileRank").textContent=
-  isDeveloper?"Главный разработчик":"Игрок";
+ page("profile");
+}
 
- document.getElementById("developer").classList.toggle("hidden",!isDeveloper);
+function updateProfile(){
+ if(!currentNick){
+  document.getElementById("pNick").textContent="Гость";
+  document.getElementById("pRank").textContent="Игрок";
+  document.getElementById("pTitle").textContent="Участник форума";
+  document.getElementById("pStatus").textContent="Не в сети";
+  return;
+ }
+ const data=players[currentNick]||{rank:"Игрок",title:"Участник форума"};
+ document.getElementById("pNick").textContent=currentNick;
+ document.getElementById("pRank").textContent=data.rank;
+ document.getElementById("pTitle").textContent=data.title;
+ document.getElementById("pStatus").textContent="В сети";
+}
 
- document.getElementById("password").value="";
- document.getElementById("authMessage").textContent="";
+function updateDeveloper(){
+ document.getElementById("devCurrent").textContent=
+  "Вы вошли как: "+currentNick;
+}
 
- showPage("profile");
+function giveRank(){
+ if(currentNick.toLowerCase()!=="wells_ohhotnik"){
+  document.getElementById("devMessage").textContent="Нет доступа.";
+  return;
+ }
+
+ const target=document.getElementById("targetNick").value.trim();
+ const rank=document.getElementById("rankSelect").value;
+ const title=document.getElementById("titleInput").value.trim();
+
+ if(!target){
+  document.getElementById("devMessage").textContent="Введи ник игрока.";
+  return;
+ }
+
+ if(!players[target]){
+  players[target]={rank:"Игрок",title:"Участник форума"};
+ }
+
+ players[target].rank=rank;
+ players[target].title=title||rank;
+
+ document.getElementById("devMessage").textContent=
+  "Для "+target+" установлен ранг: "+rank+
+  ", титул: "+players[target].title;
 }
 
 function logout(){
  currentNick="";
- document.getElementById("loginNav").classList.remove("hidden");
- document.getElementById("logoutNav").classList.add("hidden");
- document.getElementById("profileNick").textContent="Гость";
- document.getElementById("profileRank").textContent="Игрок";
- document.getElementById("profileStatus").textContent="Не в сети";
- document.getElementById("developer").classList.add("hidden");
- document.getElementById("nickname").value="";
- document.getElementById("password").value="";
- showPage("home");
+ document.getElementById("loginBtn").classList.remove("hidden");
+ document.getElementById("homeLogin").classList.remove("hidden");
+ document.getElementById("profileBtn").classList.add("hidden");
+ document.getElementById("logoutBtn").classList.add("hidden");
+ document.getElementById("devBtn").classList.add("hidden");
+ document.getElementById("nickInput").value="";
+ document.getElementById("passInput").value="";
+ page("home");
 }
 
-/* Анимация загрузки */
+/* Загрузка */
 let progress=0;
-const bar=document.getElementById("progressbar");
-const percent=document.getElementById("percent");
-const emojis=["🔥","⚡","🎮","🚀"];
-
-const loading=setInterval(()=>{
+const timer=setInterval(()=>{
  progress+=2;
  if(progress>100) progress=100;
- bar.style.width=progress+"%";
- percent.textContent=progress+"%";
- document.getElementById("loaderEmoji").textContent=
-  emojis[Math.floor(progress/26)%emojis.length];
-
+ document.getElementById("bar").style.width=progress+"%";
+ document.getElementById("loadPercent").textContent=progress+"%";
  if(progress>=100){
-  clearInterval(loading);
+  clearInterval(timer);
   setTimeout(()=>{
    const loader=document.getElementById("loader");
    loader.style.opacity="0";
@@ -296,6 +293,5 @@ const loading=setInterval(()=>{
  }
 },35);
 </script>
-
 </body>
 </html>
