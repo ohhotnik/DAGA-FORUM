@@ -3,548 +3,511 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KARATEL TEST — BLACK RUSSIA</title>
 <style>
-:root {
-  --bg:#101114;
-  --panel:#191b20;
-  --panel2:#22252b;
-  --orange:#ff7900;
-  --text:#f4f4f4;
-  --muted:#999;
-  --border:#30333a;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,sans-serif;
-}
-header {
-  background:#17191e;
-  border-bottom:2px solid var(--orange);
-  padding:17px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.logo {font-size:22px;font-weight:bold;color:var(--orange)}
-nav {display:flex;gap:7px;flex-wrap:wrap}
-button {
-  background:var(--orange);
-  border:0;
-  color:white;
-  padding:11px 15px;
-  border-radius:6px;
-  font-weight:bold;
-  cursor:pointer;
-}
-button:hover {filter:brightness(1.15)}
-button.secondary {background:#333740}
-button.danger {background:#a52c2c}
-main {max-width:1050px;margin:25px auto;padding:0 14px}
-.panel {
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:18px;
-  margin-bottom:15px;
-}
-h1,h2,h3 {margin-top:0}
-h2 {color:var(--orange)}
-.card {
-  background:var(--panel2);
-  border:1px solid var(--border);
-  padding:17px;
-  margin:10px 0;
-  border-radius:8px;
-  cursor:pointer;
-}
-.card:hover {border-color:var(--orange)}
-.card strong {font-size:17px}
-.card small {display:block;color:var(--muted);margin-top:7px}
-input,select,textarea {
-  width:100%;
-  background:#101216;
-  color:white;
-  border:1px solid #41454e;
-  border-radius:6px;
-  padding:12px;
-  margin:7px 0 13px;
-}
-textarea {min-height:100px;resize:vertical}
-.hidden {display:none!important}
-.badge {
-  display:inline-block;
-  background:#55300f;
-  color:#ffad55;
-  border-radius:5px;
-  padding:5px 8px;
-  font-size:12px;
-  margin:3px;
-}
-.muted {color:var(--muted)}
-.topic {
-  padding:14px;
-  border-bottom:1px solid var(--border);
-}
-.topic:last-child {border-bottom:0}
-footer {
-  text-align:center;
-  color:#777;
-  padding:25px;
-}
+:root{--bg:#090b0e;--box:#15191f;--box2:#202630;--orange:#ff851b;--text:#f4f4f4;--muted:#9ca3af;--line:#303844;--green:#39cf83}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{background:#11151b;border-bottom:2px solid var(--orange);padding:17px}
+.wrap{max-width:1100px;margin:auto}
+.logo{font-size:25px;font-weight:900;color:var(--orange)}
+.sub{font-size:12px;color:var(--muted);margin-top:5px}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+button{background:var(--orange);color:#171717;border:0;border-radius:7px;padding:11px 15px;font-weight:bold;cursor:pointer}
+button.secondary{background:var(--box2);color:white;border:1px solid var(--line)}
+button.red{background:#a83232;color:white}
+main{max-width:1100px;margin:22px auto;padding:0 13px}
+.card{background:var(--box);border:1px solid var(--line);border-radius:11px;padding:18px;margin-bottom:14px}
+h1{font-size:23px;margin:0 0 15px}
+h2{font-size:19px;margin:18px 0 12px}
+h3{font-size:16px;margin:0 0 8px}
+p{color:var(--muted);line-height:1.5}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 13px;background:#0c1015;color:white;border:1px solid var(--line);border-radius:7px;font-size:15px}
+textarea{min-height:110px}
+label{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.item{background:var(--box2);padding:16px;border:1px solid var(--line);border-radius:9px;cursor:pointer}
+.item:hover{border-color:var(--orange)}
+.hidden{display:none!important}
+.orange{color:var(--orange)}
+.badge{display:inline-block;background:#462a15;color:#ffb36b;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:bold}
+.online{color:var(--green)}
+.muted{color:var(--muted)}
+.small{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.topic{padding:13px 0;border-bottom:1px solid var(--line)}
+.topic:last-child{border:0}
+#notice{padding:12px;border-radius:8px;margin-bottom:12px}
+#notice.ok{background:#173b29;color:#a9ffd0}
+#notice.err{background:#481d1d;color:#ffb1b1}
+footer{text-align:center;color:var(--muted);padding:25px}
 </style>
 </head>
 <body>
 
 <header>
+ <div class="wrap">
   <div class="logo">KARATEL TEST</div>
-  <nav id="menu">
-    <button onclick="showPage('home')">Главная</button>
-    <button onclick="showPage('forum')">Форум</button>
-    <button onclick="showPage('profile')">Профиль</button>
-    <button id="adminButton" class="hidden" onclick="showPage('admin')">Админка</button>
-    <button id="developerButton" class="hidden" onclick="showPage('developer')">Разработчик</button>
-    <button id="logoutButton" class="hidden secondary" onclick="logout()">Выйти</button>
+  <div class="sub">BLACK RUSSIA ROLE PLAY FORUM</div>
+  <nav id="navigation" class="hidden">
+   <button class="secondary" onclick="page('home')">Главная</button>
+   <button class="secondary" onclick="page('forum')">Форум</button>
+   <button class="secondary" onclick="page('online')">Кто в сети</button>
+   <button class="secondary" onclick="page('profile')">Профиль</button>
+   <button class="secondary hidden" id="adminButton" onclick="page('admin')">Администрация</button>
+   <button class="secondary hidden" id="devButton" onclick="page('developer')">Разработчик</button>
+   <button class="secondary" onclick="logout()">Выйти</button>
   </nav>
+ </div>
 </header>
 
 <main>
+ <div id="notice" class="hidden"></div>
 
-<section id="home" class="page">
-  <div class="panel">
-    <h1>KARATEL TEST</h1>
-    <p class="muted">Форум игрового проекта</p>
-    <h2>Добро пожаловать!</h2>
-    <p>Общение, государственные организации и криминальные группировки.</p>
-    <button id="loginButton" onclick="showPage('login')">Войти в аккаунт</button>
-    <button onclick="showPage('forum')">Открыть форум</button>
+ <section id="auth">
+  <div class="card">
+   <h1>Авторизация</h1>
+   <p>Войди в аккаунт или зарегистрируйся.</p>
+   <label>Игровой никнейм</label>
+   <input id="nickname" maxlength="24" placeholder="Твой никнейм">
+   <label>Электронная почта</label>
+   <input id="email" type="email" placeholder="Email">
+   <label>Пароль</label>
+   <input id="password" type="password" placeholder="Пароль">
+   <div class="row">
+    <button onclick="register()">Регистрация</button>
+    <button class="secondary" onclick="login()">Войти</button>
+   </div>
   </div>
-</section>
+ </section>
 
-<section id="login" class="page hidden">
-  <div class="panel">
-    <h2>Вход / регистрация</h2>
-    <label>Ваш игровой ник</label>
-    <input id="nickname" placeholder="Например: Player_Name">
-    <label>Выберите организацию</label>
-    <select id="newFaction">
-      <option value="">Без организации</option>
-      <option>ГИБДД</option>
-      <option>МВД</option>
-      <option>Армия</option>
-      <option>Больница</option>
-      <option>Правительство</option>
-      <option>СМИ</option>
-      <option>ОПГ Лыткарино</option>
-      <option>ОПГ Арзамас</option>
-      <option>ОПГ Батыровка</option>
-    </select>
-    <button onclick="authenticate()">Войти / создать профиль</button>
-    <button class="secondary" onclick="showPage('home')">Назад</button>
-    <p class="muted">Это демонстрационная регистрация без настоящей проверки пароля.</p>
+ <section id="home" class="hidden">
+  <div class="card">
+   <h1>Главная страница</h1>
+   <h2 class="orange">Добро пожаловать на KARATEL TEST!</h2>
+   <div id="welcome"></div>
+   <p>Форум игрового проекта. Создавай темы, общайся и следи за организациями.</p>
   </div>
-</section>
-
-<section id="forum" class="page hidden">
-  <div class="panel">
-    <h2>Форум</h2>
-    <p class="muted">Выберите нужный раздел.</p>
-
-    <div class="card" onclick="openCategory('government')">
-      <strong>🏛 Государственные организации</strong>
-      <small>ГИБДД, МВД, Армия, Больница, Правительство, СМИ</small>
-    </div>
-
-    <div class="card" onclick="openCategory('criminal')">
-      <strong>⚔ Криминальные организации</strong>
-      <small>ОПГ Лыткарино, ОПГ Арзамас, ОПГ Батыровка</small>
-    </div>
-
-    <div class="card" onclick="openSection('Общение')">
-      <strong>💬 Общение</strong>
-      <small>Общий раздел форума</small>
-    </div>
-
-    <div class="card" onclick="openSection('Новости')">
-      <strong>📰 Новости</strong>
-      <small>Новости проекта</small>
-    </div>
-
-    <div class="card" onclick="openSection('Поддержка')">
-      <strong>🎧 Поддержка</strong>
-      <small>Вопросы и помощь</small>
-    </div>
+  <div class="grid">
+   <div class="item" onclick="page('forum')"><h3>Форум</h3><p>Разделы и организации</p></div>
+   <div class="item" onclick="page('online')"><h3>Кто в сети</h3><p>Активные пользователи</p></div>
+   <div class="item" onclick="page('profile')"><h3>Мой профиль</h3><p>Твой игровой аккаунт</p></div>
   </div>
-</section>
+ </section>
 
-<section id="categoryPage" class="page hidden">
-  <div class="panel">
-    <button class="secondary" onclick="showPage('forum')">← Назад</button>
-    <h2 id="categoryTitle"></h2>
-    <div id="categoryList"></div>
+ <section id="forum" class="hidden">
+  <div class="card">
+   <h1>Форум</h1>
+   <h2 class="orange">Государственные организации</h2>
+   <div class="grid" id="government"></div>
+   <h2 class="orange">Криминальные организации</h2>
+   <div class="grid" id="criminal"></div>
+   <h2 class="orange">Другие разделы</h2>
+   <div class="grid" id="other"></div>
   </div>
-</section>
+ </section>
 
-<section id="sectionPage" class="page hidden">
-  <div class="panel">
-    <button class="secondary" onclick="goBack()">← Назад</button>
-    <h2 id="sectionTitle"></h2>
-    <p id="sectionDescription" class="muted"></p>
-
-    <div id="topicList"></div>
-
-    <div class="panel">
-      <h3>Создать тему</h3>
-      <input id="topicName" placeholder="Название темы">
-      <textarea id="topicText" placeholder="Текст сообщения"></textarea>
-      <button onclick="addTopic()">Опубликовать</button>
-    </div>
+ <section id="section" class="hidden">
+  <div class="card">
+   <div class="row">
+    <h1 id="sectionName">Раздел</h1>
+    <button class="secondary" onclick="page('forum')">Назад</button>
+   </div>
+   <label>Название темы</label>
+   <input id="topicTitle" maxlength="100" placeholder="Название темы">
+   <label>Текст сообщения</label>
+   <textarea id="topicText" maxlength="5000" placeholder="Текст темы"></textarea>
+   <button onclick="createTopic()">Опубликовать тему</button>
   </div>
-</section>
-
-<section id="profile" class="page hidden">
-  <div class="panel">
-    <h2>Профиль игрока</h2>
-    <h3 id="profileName">Не авторизован</h3>
-    <p>Титул: <span id="profileTitle" class="badge">Игрок</span></p>
-    <p>Организация: <span id="profileFaction">Нет</span></p>
-    <p>Должность: <span id="profilePosition">Нет</span></p>
-    <button onclick="showPage('login')">Войти в аккаунт</button>
+  <div class="card">
+   <h2>Темы раздела</h2>
+   <div id="topics"></div>
   </div>
-</section>
+ </section>
 
-<section id="admin" class="page hidden">
-  <div class="panel">
-    <h2>Администрация</h2>
-    <h3>Назначить организацию и должность</h3>
-    <input id="targetNick" placeholder="Ник игрока">
-
-    <label>Организация</label>
-    <select id="targetFaction">
-      <option value="">Без организации</option>
-      <option>ГИБДД</option>
-      <option>МВД</option>
-      <option>Армия</option>
-      <option>Больница</option>
-      <option>Правительство</option>
-      <option>СМИ</option>
-      <option>ОПГ Лыткарино</option>
-      <option>ОПГ Арзамас</option>
-      <option>ОПГ Батыровка</option>
-    </select>
-
-    <label>Должность</label>
-    <select id="targetPosition">
-      <option>Игрок</option>
-      <option>Начальник</option>
-      <option>Заместитель</option>
-      <option>Командир</option>
-      <option>Главврач</option>
-      <option>Губернатор</option>
-      <option>Директор</option>
-      <option>Лидер</option>
-    </select>
-
-    <label>Титул</label>
-    <select id="targetRank">
-      <option>Игрок</option>
-      <option>VIP</option>
-      <option>Модератор</option>
-      <option>Администратор</option>
-      <option>Старший администратор</option>
-      <option>Главный администратор</option>
-    </select>
-
-    <button onclick="givePermissions()">Сохранить назначения</button>
-    <h3>Зарегистрированные профили</h3>
-    <div id="playerList"></div>
+ <section id="online" class="hidden">
+  <div class="card">
+   <h1>Кто в сети</h1>
+   <div id="onlineUsers">Загрузка...</div>
   </div>
-</section>
+ </section>
 
-<section id="developer" class="page hidden">
-  <div class="panel">
-    <h2>Панель разработчика</h2>
-    <p>Главный разработчик: Wells_ohhotnik</p>
-    <p class="badge">Главный разработчик</p>
-    <p class="muted">Демонстрационная панель проекта.</p>
+ <section id="profile" class="hidden">
+  <div class="card">
+   <h1>Мой профиль</h1>
+   <div id="profileData"></div>
+   <label>Изменить никнейм</label>
+   <input id="editNickname" maxlength="24">
+   <button onclick="saveProfile()">Сохранить</button>
   </div>
-</section>
+ </section>
 
+ <section id="admin" class="hidden">
+  <div class="card">
+   <h1 class="orange">Панель администрации</h1>
+   <p>Управление игровыми профилями. Доступ только для назначенных сотрудников.</p>
+   <label>UID игрока</label>
+   <input id="adminUid" placeholder="UID пользователя">
+   <label>Титул</label>
+   <select id="adminRank">
+    <option>Игрок</option>
+    <option>VIP</option>
+    <option>Модератор</option>
+    <option>Администратор</option>
+    <option>Старший администратор</option>
+    <option>Главный администратор</option>
+   </select>
+   <label>Фракция</label>
+   <select id="adminFaction">
+    <option>Без фракции</option>
+    <option>ГИБДД</option>
+    <option>МВД</option>
+    <option>Армия</option>
+    <option>Больница</option>
+    <option>Правительство</option>
+    <option>СМИ</option>
+    <option>ОПГ Лыткарино</option>
+    <option>ОПГ Арзамас</option>
+    <option>ОПГ Батыровка</option>
+   </select>
+   <label>Должность</label>
+   <input id="adminPosition" placeholder="Например, Начальник">
+   <button onclick="assignProfile()">Сохранить изменения</button>
+  </div>
+ </section>
+
+ <section id="developer" class="hidden">
+  <div class="card">
+   <h1 class="orange">Панель главного разработчика</h1>
+   <h2>Wells_ohhotnik</h2>
+   <span class="badge">Главный разработчик</span>
+   <p>Полный доступ к управлению ролями сайта.</p>
+   <label>UID пользователя</label>
+   <input id="devUid" placeholder="UID пользователя">
+   <label>Роль</label>
+   <select id="devRole">
+    <option value="player">Игрок</option>
+    <option value="moderator">Модератор</option>
+    <option value="admin">Администратор</option>
+    <option value="developer">Разработчик</option>
+   </select>
+   <button onclick="assignRole()">Выдать роль</button>
+   <button class="red" onclick="removeRole()">Снять особую роль</button>
+  </div>
+  <div class="card">
+   <h2>Зарегистрированные игроки</h2>
+   <div id="allUsers">Загрузка...</div>
+  </div>
+ </section>
 </main>
 
 <footer>KARATEL TEST © 2026</footer>
 
-<script>
-const government = [
-  "ГИБДД",
-  "МВД",
-  "Армия",
-  "Больница",
-  "Правительство",
-  "СМИ"
-];
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+import {
+ getAuth,createUserWithEmailAndPassword,signInWithEmailAndPassword,
+ signOut,onAuthStateChanged,updateProfile
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+import {
+ getDatabase,ref,set,get,update,push,onValue,onDisconnect,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
 
-const criminal = [
-  "ОПГ Лыткарино",
-  "ОПГ Арзамас",
-  "ОПГ Батыровка"
-];
+const firebaseConfig={
+ apiKey:"AIzaSyArqx-dZ_RCj34CWV92WibEgJQ1USkXr2M",
+ authDomain:"forum-148a4.firebaseapp.com",
+ databaseURL:"https://forum-148a4-default-rtdb.firebaseio.com",
+ projectId:"forum-148a4",
+ storageBucket:"forum-148a4.firebasestorage.app",
+ messagingSenderId:"1054277351501",
+ appId:"1:1054277351501:web:653af5526d39489e5e0404",
+ measurementId:"G-D6JYX90THH"
+};
 
-let players = JSON.parse(localStorage.getItem("karatel_players") || "{}");
-let topics = JSON.parse(localStorage.getItem("karatel_topics") || "{}");
-let currentNick = localStorage.getItem("karatel_current") || "";
-let currentSection = "";
-let previousPage = "forum";
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getDatabase(app);
 
-function saveData() {
-  localStorage.setItem("karatel_players", JSON.stringify(players));
-  localStorage.setItem("karatel_topics", JSON.stringify(topics));
+let user=null;
+let role="player";
+let activeSection="";
+let topicListener=null;
+let onlineListener=null;
+
+const roleNames={
+ player:"Игрок",
+ moderator:"Модератор",
+ admin:"Администратор",
+ developer:"Главный разработчик"
+};
+
+const government=["ГИБДД","МВД","Армия","Больница","Правительство","СМИ"];
+const criminal=["ОПГ Лыткарино","ОПГ Арзамас","ОПГ Батыровка"];
+const other=["Общение","Новости","Поддержка"];
+
+function msg(t,error=false){
+ const n=document.getElementById("notice");
+ n.textContent=t;
+ n.className=error?"err":"ok";
+ setTimeout(()=>n.classList.add("hidden"),5000);
 }
 
-function showPage(id) {
-  document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
-  updateMenu();
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
 }
 
-function updateMenu() {
-  const user = players[currentNick];
-  document.getElementById("loginButton").classList.toggle("hidden", !!user);
-  document.getElementById("logoutButton").classList.toggle("hidden", !user);
-  document.getElementById("adminButton").classList.toggle("hidden", !isAdmin());
-  document.getElementById("developerButton").classList.toggle("hidden", !isDeveloper());
-  updateProfile();
+function errorText(e){
+ const m={
+ "auth/email-already-in-use":"Эта почта уже используется.",
+ "auth/invalid-email":"Неверная почта.",
+ "auth/weak-password":"Слишком простой пароль.",
+ "auth/invalid-credential":"Неверная почта или пароль.",
+ "auth/network-request-failed":"Проверь интернет.",
+ "PERMISSION_DENIED":"Firebase запретил доступ. Проверь Rules."
+ };
+ return m[e.code]||e.message||"Ошибка.";
 }
 
-function isDeveloper() {
-  return currentNick === "Wells_ohhotnik";
+window.page=function(id){
+ document.querySelectorAll("main section").forEach(s=>s.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ if(id==="online")loadOnline();
+ if(id==="profile")loadProfile();
+ if(id==="developer")loadDeveloper();
+};
+
+function makeItems(element,items){
+ document.getElementById(element).innerHTML=items.map(x=>
+ `<div class="item" data-section="${esc(x)}"><h3>${esc(x)}</h3><p>Открыть раздел</p></div>`
+ ).join("");
+ document.querySelectorAll("#"+element+" [data-section]").forEach(el=>{
+  el.onclick=()=>openSection(el.dataset.section);
+ });
 }
+makeItems("government",government);
+makeItems("criminal",criminal);
+makeItems("other",other);
 
-function isAdmin() {
-  if (isDeveloper()) return true;
-  const user = players[currentNick];
-  return !!user && [
-    "Администратор",
-    "Старший администратор",
-    "Главный администратор"
-  ].includes(user.rank);
-}
-
-function authenticate() {
-  const nick = document.getElementById("nickname").value.trim();
-  if (!nick) {
-    alert("Введите игровой ник!");
-    return;
-  }
-
-  if (!players[nick]) {
-    players[nick] = {
-      faction: document.getElementById("newFaction").value,
-      position: "Игрок",
-      rank: "Игрок"
-    };
-  }
-
-  currentNick = nick;
-  localStorage.setItem("karatel_current", nick);
-  saveData();
-  updateMenu();
-  showPage("forum");
-}
-
-function logout() {
-  currentNick = "";
-  localStorage.removeItem("karatel_current");
-  updateMenu();
-  showPage("home");
-}
-
-function updateProfile() {
-  const user = players[currentNick];
-  document.getElementById("profileName").textContent = currentNick || "Не авторизован";
-  document.getElementById("profileTitle").textContent = user ? user.rank : "Игрок";
-  document.getElementById("profileFaction").textContent = user && user.faction ? user.faction : "Нет";
-  document.getElementById("profilePosition").textContent = user ? user.position : "Нет";
-}
-
-function openCategory(type) {
-  previousPage = "forum";
-  const list = type === "government" ? government : criminal;
-  document.getElementById("categoryTitle").textContent =
-    type === "government" ? "Государственные организации" : "Криминальные организации";
-
-  const container = document.getElementById("categoryList");
-  container.innerHTML = "";
-
-  list.forEach(name => {
-    const div = document.createElement("div");
-    div.className = "card";
-    const strong = document.createElement("strong");
-    strong.textContent = name;
-    const small = document.createElement("small");
-    small.textContent = "Открыть форум организации";
-    div.append(strong, small);
-    div.onclick = () => openSection(name);
-    container.appendChild(div);
+window.register=async function(){
+ const nick=document.getElementById("nickname").value.trim();
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ if(nick.length<3||nick.length>24||!email||password.length<6){
+  msg("Проверь ник, почту и пароль. Пароль должен быть не короче 6 символов.",true);
+  return;
+ }
+ try{
+  const result=await createUserWithEmailAndPassword(auth,email,password);
+  await updateProfile(result.user,{displayName:nick});
+  await set(ref(db,"profiles/"+result.user.uid),{
+   nickname:nick,
+   createdAt:serverTimestamp()
   });
+  msg("Регистрация прошла успешно.");
+ }catch(e){msg(errorText(e),true);}
+};
 
-  showPage("categoryPage");
-}
+window.login=async function(){
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+ try{
+  await signInWithEmailAndPassword(auth,email,password);
+ }catch(e){msg(errorText(e),true);}
+};
 
-function goBack() {
-  if (government.includes(currentSection)) {
-    openCategory("government");
-  } else if (criminal.includes(currentSection)) {
-    openCategory("criminal");
-  } else {
-    showPage(previousPage);
-  }
-}
+window.logout=async function(){
+ try{
+  if(user)await set(ref(db,"presence/"+user.uid),null);
+  await signOut(auth);
+ }catch(e){msg(errorText(e),true);}
+};
 
-function canAccess(section) {
-  if (isAdmin()) return true;
-  const user = players[currentNick];
-  if (!user) return false;
-  return user.faction === section;
-}
-
-function openSection(name) {
-  if (!currentNick) {
-    alert("Сначала войдите в аккаунт!");
-    showPage("login");
-    return;
-  }
-
-  if (
-    [...government, ...criminal].includes(name) &&
-    !canAccess(name)
-  ) {
-    alert("У вас нет доступа к этой организации. Обратитесь к администрации.");
-    return;
-  }
-
-  previousPage = "categoryPage";
-  currentSection = name;
-  document.getElementById("sectionTitle").textContent = name;
-  document.getElementById("sectionDescription").textContent =
-    "Форум организации: " + name;
-  renderTopics();
-  showPage("sectionPage");
-}
-
-function addTopic() {
-  if (!currentNick) {
-    alert("Войдите в аккаунт!");
-    return;
-  }
-
-  const title = document.getElementById("topicName").value.trim();
-  const text = document.getElementById("topicText").value.trim();
-
-  if (!title || !text) {
-    alert("Заполните название и сообщение!");
-    return;
-  }
-
-  if (!topics[currentSection]) topics[currentSection] = [];
-
-  topics[currentSection].push({
-    title,
-    text,
-    author: currentNick,
-    date: new Date().toLocaleString("ru-RU")
+onAuthStateChanged(auth,async u=>{
+ user=u;
+ if(!u){
+  document.getElementById("auth").classList.remove("hidden");
+  document.getElementById("navigation").classList.add("hidden");
+  document.querySelectorAll("main section").forEach(s=>{
+   if(s.id!=="auth")s.classList.add("hidden");
   });
+  return;
+ }
+ try{
+  const p=await get(ref(db,"profiles/"+u.uid));
+  if(!p.exists()){
+   await set(ref(db,"profiles/"+u.uid),{
+    nickname:u.displayName||"Игрок",
+    createdAt:serverTimestamp()
+   });
+  }
+  await loadRole();
+  document.getElementById("auth").classList.add("hidden");
+  document.getElementById("navigation").classList.remove("hidden");
+  document.getElementById("welcome").innerHTML=
+   "Привет, <b>"+esc(u.displayName||"Игрок")+"</b>! <span class='badge'>"+esc(roleNames[role])+"</span>";
+  await startPresence();
+  updateButtons();
+  page("home");
+ }catch(e){msg(errorText(e),true);}
+});
 
-  saveData();
-  document.getElementById("topicName").value = "";
-  document.getElementById("topicText").value = "";
-  renderTopics();
+async function loadRole(){
+ const s=await get(ref(db,"staff/"+user.uid));
+ role=s.exists()?(s.val().role||"player"):"player";
+ if(!roleNames[role])role="player";
 }
 
-function renderTopics() {
-  const container = document.getElementById("topicList");
-  container.innerHTML = "";
+function updateButtons(){
+ document.getElementById("devButton").classList.toggle("hidden",role!=="developer");
+ document.getElementById("adminButton").classList.toggle("hidden",!["admin","developer"].includes(role));
+}
 
-  const list = topics[currentSection] || [];
+async function startPresence(){
+ const p=ref(db,"presence/"+user.uid);
+ await onDisconnect(p).remove();
+ await set(p,{
+  nickname:user.displayName||"Игрок",
+  online:true,
+  lastSeen:serverTimestamp()
+ });
+}
 
-  if (!list.length) {
-    container.textContent = "Пока нет тем. Создайте первую тему!";
-    return;
+function openSection(name){
+ activeSection=name;
+ document.getElementById("sectionName").textContent=name;
+ document.getElementById("topicTitle").value="";
+ document.getElementById("topicText").value="";
+ page("section");
+ loadTopics();
+}
+
+async function loadTopics(){
+ if(topicListener){topicListener();topicListener=null;}
+ const list=document.getElementById("topics");
+ list.textContent="Загрузка...";
+ topicListener=onValue(ref(db,"topics/"+encodeURIComponent(activeSection)),snap=>{
+  if(!snap.exists()){
+   list.innerHTML="<p>Тем пока нет. Создай первую тему.</p>";
+   return;
   }
+  list.innerHTML=Object.values(snap.val()).reverse().map(t=>`
+   <div class="topic">
+    <h3>${esc(t.title)}</h3>
+    <p>${esc(t.text)}</p>
+    <span class="small">Автор: ${esc(t.author||"Игрок")}</span>
+   </div>
+  `).join("");
+ },e=>{list.textContent=errorText(e);});
+}
 
-  list.forEach(topic => {
-    const div = document.createElement("div");
-    div.className = "topic";
-
-    const title = document.createElement("h3");
-    title.textContent = topic.title;
-
-    const body = document.createElement("p");
-    body.textContent = topic.text;
-
-    const info = document.createElement("small");
-    info.className = "muted";
-    info.textContent = topic.author + " • " + topic.date;
-
-    div.append(title, body, info);
-    container.appendChild(div);
+window.createTopic=async function(){
+ const title=document.getElementById("topicTitle").value.trim();
+ const text=document.getElementById("topicText").value.trim();
+ if(!title||!text){msg("Заполни название и сообщение.",true);return;}
+ try{
+  await set(push(ref(db,"topics/"+encodeURIComponent(activeSection))),{
+   title,text,
+   author:user.displayName||"Игрок",
+   authorUid:user.uid,
+   createdAt:serverTimestamp()
   });
+  document.getElementById("topicTitle").value="";
+  document.getElementById("topicText").value="";
+  msg("Тема опубликована.");
+ }catch(e){msg(errorText(e),true);}
+};
+
+function loadOnline(){
+ const list=document.getElementById("onlineUsers");
+ if(onlineListener)onlineListener();
+ list.textContent="Загрузка...";
+ onlineListener=onValue(ref(db,"presence"),snap=>{
+  if(!snap.exists()){list.innerHTML="<p>Сейчас никого нет в сети.</p>";return;}
+  list.innerHTML=Object.values(snap.val()).map(p=>`
+   <div class="topic"><span class="online">● В сети</span> <b>${esc(p.nickname)}</b></div>
+  `).join("");
+ },e=>{list.textContent=errorText(e);});
 }
 
-function givePermissions() {
-  if (!isAdmin()) {
-    alert("Нет доступа!");
-    return;
-  }
-
-  const nick = document.getElementById("targetNick").value.trim();
-  if (!nick) {
-    alert("Введите ник игрока!");
-    return;
-  }
-
-  if (!players[nick]) {
-    players[nick] = {
-      faction: "",
-      position: "Игрок",
-      rank: "Игрок"
-    };
-  }
-
-  players[nick].faction = document.getElementById("targetFaction").value;
-  players[nick].position = document.getElementById("targetPosition").value;
-  players[nick].rank = document.getElementById("targetRank").value;
-
-  saveData();
-  renderPlayers();
-  alert("Назначения сохранены!");
+async function loadProfile(){
+ const s=await get(ref(db,"profiles/"+user.uid));
+ const p=s.val()||{};
+ document.getElementById("editNickname").value=p.nickname||user.displayName||"";
+ document.getElementById("profileData").innerHTML=`
+  <p>Ник: <b>${esc(p.nickname||user.displayName)}</b></p>
+  <p>Титул: <span class="badge">${esc(roleNames[role])}</span></p>
+  <p>Фракция: ${esc(p.faction||"Без фракции")}</p>
+  <p>Должность: ${esc(p.position||"Не назначена")}</p>
+  <p class="small">UID: ${esc(user.uid)}</p>`;
 }
 
-function renderPlayers() {
-  const container = document.getElementById("playerList");
-  container.innerHTML = "";
+window.saveProfile=async function(){
+ const nick=document.getElementById("editNickname").value.trim();
+ if(nick.length<3||nick.length>24){msg("Ник должен быть от 3 до 24 символов.",true);return;}
+ try{
+  await update(ref(db,"profiles/"+user.uid),{nickname:nick});
+  await updateProfile(user,{displayName:nick});
+  msg("Профиль сохранён.");
+  loadProfile();
+ }catch(e){msg(errorText(e),true);}
+};
 
-  Object.keys(players).forEach(nick => {
-    const div = document.createElement("div");
-    div.className = "topic";
-    div.textContent =
-      nick + " — " + players[nick].rank +
-      " — " + (players[nick].faction || "Без организации") +
-      " — " + players[nick].position;
-    container.appendChild(div);
+window.assignProfile=async function(){
+ if(!["admin","developer"].includes(role)){msg("Нет доступа.",true);return;}
+ const uid=document.getElementById("adminUid").value.trim();
+ if(!uid){msg("Введи UID игрока.",true);return;}
+ try{
+  await update(ref(db,"profiles/"+uid),{
+   rank:document.getElementById("adminRank").value,
+   faction:document.getElementById("adminFaction").value,
+   position:document.getElementById("adminPosition").value.trim()
   });
-}
+  msg("Профиль игрока обновлён.");
+ }catch(e){msg(errorText(e),true);}
+};
 
-updateMenu();
-renderPlayers();
-showPage(currentNick ? "forum" : "home");
+window.assignRole=async function(){
+ if(role!=="developer"){msg("Нет доступа.",true);return;}
+ const uid=document.getElementById("devUid").value.trim();
+ const newRole=document.getElementById("devRole").value;
+ if(!uid){msg("Введи UID игрока.",true);return;}
+ try{
+  await set(ref(db,"staff/"+uid),{role:newRole});
+  msg("Роль выдана.");
+  loadDeveloper();
+ }catch(e){msg(errorText(e),true);}
+};
+
+window.removeRole=async function(){
+ if(role!=="developer"){msg("Нет доступа.",true);return;}
+ const uid=document.getElementById("devUid").value.trim();
+ if(!uid||uid===user.uid){msg("Укажи UID другого пользователя.",true);return;}
+ try{
+  await set(ref(db,"staff/"+uid),{role:"player"});
+  msg("Особая роль снята.");
+  loadDeveloper();
+ }catch(e){msg(errorText(e),true);}
+};
+
+async function loadDeveloper(){
+ if(role!=="developer"){msg("Нет доступа.",true);page("home");return;}
+ const list=document.getElementById("allUsers");
+ list.textContent="Загрузка...";
+ try{
+  const s=await get(ref(db,"profiles"));
+  if(!s.exists()){list.textContent="Игроков пока нет.";return;}
+  list.innerHTML=Object.entries(s.val()).map(([uid,p])=>`
+   <div class="topic">
+    <b>${esc(p.nickname||"Игрок")}</b>
+    <div class="small">UID: ${esc(uid)}</div>
+    <div class="small">Титул: ${esc(p.rank||"Игрок")} · ${esc(p.faction||"Без фракции")}</div>
+   </div>
+  `).join("");
+ }catch(e){list.textContent=errorText(e);}
+}
 </script>
-
 </body>
 </html>
