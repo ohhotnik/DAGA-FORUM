@@ -1,14 +1,240 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#111214" />
-    <meta name="description" content="KARATEL TEST — игровой форум сообщества." />
-    <title>KARATEL TEST — Форум</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111214">
+<title>KARATEL TEST — Форум</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#101113;
+ color:#eee;
+ font-family:Arial,sans-serif
+}
+header{
+ background:#191a1d;
+ border-bottom:2px solid #ff7900;
+ padding:18px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center
+}
+.logo{font-size:23px;font-weight:bold;color:#ff7900}
+button{
+ background:#ff7900;
+ color:#fff;
+ border:0;
+ padding:11px 16px;
+ border-radius:6px;
+ font-weight:bold;
+ cursor:pointer
+}
+nav{
+ background:#1c1d20;
+ padding:14px;
+ display:flex;
+ gap:20px;
+ flex-wrap:wrap
+}
+nav a{color:#ddd;text-decoration:none}
+nav a:hover{color:#ff7900}
+.container{max-width:1050px;margin:25px auto;padding:0 15px}
+.welcome{
+ background:linear-gradient(120deg,#292018,#171719);
+ border:1px solid #49301d;
+ padding:25px;
+ border-radius:10px;
+ margin-bottom:25px
+}
+h1{color:#ff7900;margin-top:0}
+h2{font-size:19px}
+.category{
+ background:#1b1c1f;
+ border:1px solid #303135;
+ border-radius:8px;
+ margin-bottom:12px;
+ padding:17px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px
+}
+.category:hover{border-color:#ff7900}
+.category h3{margin:0 0 7px;color:#ff9a35}
+.category p{margin:0;color:#aaa;font-size:13px}
+.count{color:#aaa;font-size:13px}
+.section-title{
+ background:#27282c;
+ padding:14px;
+ border-left:4px solid #ff7900;
+ margin-bottom:12px;
+ font-weight:bold
+}
+footer{
+ text-align:center;
+ color:#777;
+ padding:30px;
+ border-top:1px solid #303135;
+ margin-top:40px
+}
+.modal{
+ display:none;
+ position:fixed;
+ inset:0;
+ background:#000b;
+ align-items:center;
+ justify-content:center;
+ padding:15px
+}
+.modal-box{
+ background:#202125;
+ padding:25px;
+ border-radius:10px;
+ width:100%;
+ max-width:350px
+}
+input{
+ width:100%;
+ padding:12px;
+ margin:8px 0;
+ background:#111214;
+ border:1px solid #444;
+ border-radius:5px;
+ color:white
+}
+.close{float:right;background:#444}
+@media(max-width:500px){
+ .logo{font-size:19px}
+ .category{align-items:flex-start}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">🔥 KARATEL TEST</div>
+ <button onclick="openModal('Вход')">Войти</button>
+</header>
+
+<nav>
+ <a href="#">Главная</a>
+ <a href="#forum">Форум</a>
+ <a href="#about">О проекте</a>
+ <a href="#footer">Контакты</a>
+</nav>
+
+<main class="container">
+
+ <section class="welcome">
+  <h1>KARATEL TEST</h1>
+  <p>Добро пожаловать на форум игрового проекта KARATEL TEST!</p>
+  <p>Общение, новости, обсуждения и игровое сообщество.</p>
+  <button onclick="openModal('Регистрация')">Регистрация</button>
+ </section>
+
+ <section id="forum">
+  <h2>Форум проекта</h2>
+
+  <div class="section-title">📢 ИНФОРМАЦИЯ</div>
+
+  <div class="category">
+   <div>
+    <h3>Новости проекта</h3>
+    <p>Последние новости и обновления KARATEL TEST</p>
+   </div>
+   <span class="count">Новости</span>
+  </div>
+
+  <div class="category">
+   <div>
+    <h3>Правила проекта</h3>
+    <p>Правила сервера и форума</p>
+   </div>
+   <span class="count">Правила</span>
+  </div>
+
+  <div class="section-title">💬 ОБЩЕНИЕ</div>
+
+  <div class="category">
+   <div>
+    <h3>Общий раздел</h3>
+    <p>Общение участников проекта</p>
+   </div>
+   <span class="count">Форум</span>
+  </div>
+
+  <div class="category">
+   <div>
+    <h3>Жалобы</h3>
+    <p>Жалобы на игроков и администрацию</p>
+   </div>
+   <span class="count">Поддержка</span>
+  </div>
+
+  <div class="category">
+   <div>
+    <h3>Предложения</h3>
+    <p>Идеи и предложения по улучшению проекта</p>
+   </div>
+   <span class="count">Идеи</span>
+  </div>
+
+  <div class="section-title">🎮 ИГРОВОЙ РАЗДЕЛ</div>
+
+  <div class="category">
+   <div>
+    <h3>Игровые вопросы</h3>
+    <p>Вопросы по игровому процессу</p>
+   </div>
+   <span class="count">Игра</span>
+  </div>
+
+  <div class="category">
+   <div>
+    <h3>Государственные организации</h3>
+    <p>Обсуждение организаций проекта</p>
+   </div>
+   <span class="count">Организации</span>
+  </div>
+ </section>
+
+ <section id="about">
+  <h2>О KARATEL TEST</h2>
+  <p>Официальное сообщество игрового проекта KARATEL TEST.</p>
+ </section>
+
+</main>
+
+<footer id="footer">
+ © 2026 KARATEL TEST. Все права защищены.
+</footer>
+
+<div class="modal" id="modal">
+ <div class="modal-box">
+  <button class="close" onclick="closeModal()">Закрыть</button>
+  <h2 id="modalTitle">Вход</h2>
+  <input placeholder="Ваш логин">
+  <input type="password" placeholder="Пароль">
+  <button onclick="alert('Авторизация пока не подключена')">
+   Продолжить
+  </button>
+ </div>
+</div>
+
+<script>
+function openModal(title){
+ document.getElementById('modalTitle').textContent=title;
+ document.getElementById('modal').style.display='flex';
+}
+function closeModal(){
+ document.getElementById('modal').style.display='none';
+}
+</script>
+
+</body>
 </html>
