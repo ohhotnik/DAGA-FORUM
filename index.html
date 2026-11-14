@@ -1,110 +1,300 @@
 
-   <div class="card">
-    <h3>🛡️ Администрация</h3>
-    <p>Раздел администрации</p>
-   </div>
-   <div class="card">
-    <h3>🚗 Black Russia</h3>
-    <p>Игровые обсуждения</p>
-   </div>
-  </div>
- </div>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KARATEL TEST — BLACK RUSSIA</title>
 
- <div id="developer" class="section" style="display:none">
-  <h2>👑 Главный разработчик</h2>
-  <h3>Wells_ohhotnik</h3>
-  <p>Разработчик KARATEL TEST</p>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#0b0b0e;color:#eee;
+ font-family:Arial,sans-serif;
+}
+header{
+ background:#151519;border-bottom:2px solid #ff7900;
+ padding:16px;display:flex;justify-content:space-between;
+ align-items:center;gap:10px;flex-wrap:wrap;
+}
+.logo{font-size:22px;font-weight:bold;color:#ff7900}
+nav{display:flex;gap:8px;flex-wrap:wrap}
+button{
+ background:#ff7900;color:#111;border:0;
+ padding:11px 16px;border-radius:7px;
+ font-weight:bold;cursor:pointer;
+}
+button:hover{background:#ff9b38}
+.secondary{background:#29292f;color:#fff}
+main{max-width:1100px;margin:25px auto;padding:15px}
+.card{
+ background:#17171c;border:1px solid #303036;
+ border-radius:12px;padding:20px;margin-bottom:15px;
+}
+h1,h2,h3{margin-top:0}
+h2{color:#ff7900}
+p{color:#c7c7ce;line-height:1.5}
+input{
+ display:block;width:100%;padding:14px;margin:12px 0;
+ border:1px solid #41414a;border-radius:7px;
+ background:#101014;color:white;font-size:16px;
+}
+a{color:#ff7900;cursor:pointer}
+.hidden{display:none!important}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:14px;
+}
+.tag{
+ display:inline-block;background:#302117;color:#ff9b38;
+ padding:5px 9px;border-radius:6px;font-size:12px;
+}
+.online{color:#4bdc85}
+footer{text-align:center;color:#777;padding:25px}
+
+/* Загрузка */
+#loader{
+ position:fixed;inset:0;background:#09090c;z-index:1000;
+ display:flex;align-items:center;justify-content:center;
+ transition:opacity .5s;
+}
+.loader-box{
+ width:230px;text-align:center;padding:22px;
+ background:#17171c;border:1px solid #ff7900;
+ border-radius:14px;
+}
+.loader-emoji{font-size:35px;animation:bounce .7s infinite alternate}
+@keyframes bounce{to{transform:translateY(-8px)}}
+.progress{
+ height:8px;background:#333;border-radius:10px;
+ overflow:hidden;margin-top:15px;
+}
+#progressbar{height:100%;width:0;background:#ff7900}
+#percent{color:#ff7900;margin-top:9px}
+@media(max-width:500px){
+ header{justify-content:center}
+ nav{justify-content:center}
+ main{padding:10px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+ <div class="loader-box">
+  <div class="loader-emoji" id="loaderEmoji">🔥</div>
+  <h2>KARATEL TEST</h2>
+  <p>Загрузка форума...</p>
+  <div class="progress"><div id="progressbar"></div></div>
+  <div id="percent">0%</div>
  </div>
 </div>
 
-<footer>KARATEL TEST © 2026</footer>
+<header>
+ <div class="logo">🔥 KARATEL TEST</div>
+ <nav>
+  <button class="secondary" onclick="showPage('home')">Главная</button>
+  <button class="secondary" onclick="showPage('forum')">Форум</button>
+  <button id="loginNav" onclick="showPage('auth')">Войти</button>
+  <button id="logoutNav" class="hidden" onclick="logout()">Выйти</button>
+ </nav>
+</header>
+
+<main>
+
+<section id="home">
+ <div class="card">
+  <span class="tag">BLACK RUSSIA COMMUNITY</span>
+  <h1>Добро пожаловать на KARATEL TEST!</h1>
+  <p>Форум игрового сообщества. Общение, новости и обсуждения.</p>
+  <button onclick="showPage('forum')">Открыть форум</button>
+  <button class="secondary" onclick="showPage('auth')">Войти в аккаунт</button>
+ </div>
+
+ <div class="grid">
+  <div class="card">
+   <h2>📰 Новости</h2>
+   <p>Новости и объявления сообщества.</p>
+   <button onclick="showPage('news')">Открыть</button>
+  </div>
+  <div class="card">
+   <h2>💬 Общение</h2>
+   <p>Общение участников форума.</p>
+   <button onclick="showPage('forum')">Открыть</button>
+  </div>
+  <div class="card">
+   <h2>👥 Участники</h2>
+   <p>Информация о профиле и статусе.</p>
+   <button onclick="showPage('profile')">Мой профиль</button>
+  </div>
+ </div>
+</section>
+
+<section id="forum" class="hidden">
+ <div class="card">
+  <h1>Форум</h1>
+  <p>Разделы KARATEL TEST</p>
+ </div>
+ <div class="grid">
+  <div class="card">
+   <h2>📢 Государство</h2>
+   <p>Новости и обсуждения государства.</p>
+   <span class="tag">Раздел форума</span>
+  </div>
+  <div class="card">
+   <h2>🎮 Игровой раздел</h2>
+   <p>Обсуждение Black Russia.</p>
+   <span class="tag">Раздел форума</span>
+  </div>
+  <div class="card">
+   <h2>🛠 Поддержка</h2>
+   <p>Вопросы и помощь участникам.</p>
+   <span class="tag">Раздел форума</span>
+  </div>
+  <div class="card">
+   <h2>👮 Администрация</h2>
+   <p>Информация о команде сообщества.</p>
+   <span class="tag">Раздел форума</span>
+  </div>
+ </div>
+</section>
+
+<section id="news" class="hidden">
+ <div class="card">
+  <h1>Новости</h1>
+  <p>Добро пожаловать на форум KARATEL TEST.</p>
+ </div>
+</section>
+
+<section id="auth" class="hidden">
+ <div class="card" style="max-width:450px;margin:auto">
+  <h1 id="authTitle">Вход</h1>
+  <p>Введи никнейм и пароль для демонстрационного входа.</p>
+  <input id="nickname" placeholder="Твой никнейм" maxlength="24">
+  <input id="password" type="password" placeholder="Пароль">
+  <button id="authButton" onclick="authenticate()">Войти</button>
+  <p style="margin-top:20px">
+   <a id="switchAuth" onclick="toggleAuth()">Нет аккаунта? Регистрация</a>
+  </p>
+  <p id="authMessage"></p>
+ </div>
+</section>
+
+<section id="profile" class="hidden">
+ <div class="card">
+  <h1>Мой профиль</h1>
+  <h2 id="profileNick">Гость</h2>
+  <p>Ранг: <b id="profileRank">Игрок</b></p>
+  <p>Статус: <span class="online" id="profileStatus">Не в сети</span></p>
+  <button onclick="logout()">Выйти из аккаунта</button>
+ </div>
+</section>
+
+<section id="developer" class="hidden">
+ <div class="card">
+  <h1>🛠 Панель разработчика</h1>
+  <span class="tag">Главный разработчик</span>
+  <h2>Wells_ohhotnik</h2>
+  <p>Демонстрационная панель разработчика KARATEL TEST.</p>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ KARATEL TEST © 2026
+</footer>
 
 <script>
-const $ = id => document.getElementById(id);
-
 let currentNick = "";
+let registerMode = false;
 
-function page(name) {
- $("home").style.display = name === "home" ? "block" : "none";
- $("forum").style.display = name === "forum" ? "block" : "none";
- $("auth").style.display = name === "auth" ? "block" : "none";
+function showPage(page){
+ document.querySelectorAll("main section").forEach(section=>{
+  section.classList.add("hidden");
+ });
+ const target=document.getElementById(page);
+ if(target) target.classList.remove("hidden");
 }
 
-function enter() {
- const nick = $("nick").value.trim();
+function toggleAuth(){
+ registerMode=!registerMode;
+ document.getElementById("authTitle").textContent=
+  registerMode?"Регистрация":"Вход";
+ document.getElementById("authButton").textContent=
+  registerMode?"Создать аккаунт":"Войти";
+ document.getElementById("switchAuth").textContent=
+  registerMode?"Уже есть аккаунт? Войти":"Нет аккаунта? Регистрация";
+ document.getElementById("authMessage").textContent="";
+}
 
- if (!nick) {
-  $("msg").textContent = "Введите ник!";
+function authenticate(){
+ const nick=document.getElementById("nickname").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!nick || !password){
+  document.getElementById("authMessage").textContent=
+   "Заполни никнейм и пароль.";
   return;
  }
 
- currentNick = nick;
- showProfile();
+ currentNick=nick;
+ document.getElementById("loginNav").classList.add("hidden");
+ document.getElementById("logoutNav").classList.remove("hidden");
+
+ document.getElementById("profileNick").textContent=currentNick;
+ document.getElementById("profileStatus").textContent="В сети";
+
+ const isDeveloper=nick.toLowerCase()==="wells_ohhotnik";
+
+ document.getElementById("profileRank").textContent=
+  isDeveloper?"Главный разработчик":"Игрок";
+
+ document.getElementById("developer").classList.toggle("hidden",!isDeveloper);
+
+ document.getElementById("password").value="";
+ document.getElementById("authMessage").textContent="";
+
+ showPage("profile");
 }
 
-function register() {
- const nick = $("nick").value.trim();
+function logout(){
+ currentNick="";
+ document.getElementById("loginNav").classList.remove("hidden");
+ document.getElementById("logoutNav").classList.add("hidden");
+ document.getElementById("profileNick").textContent="Гость";
+ document.getElementById("profileRank").textContent="Игрок";
+ document.getElementById("profileStatus").textContent="Не в сети";
+ document.getElementById("developer").classList.add("hidden");
+ document.getElementById("nickname").value="";
+ document.getElementById("password").value="";
+ showPage("home");
+}
 
- if (!nick) {
-  $("msg").textContent = "Сначала введите ник!";
-  return;
+/* Анимация загрузки */
+let progress=0;
+const bar=document.getElementById("progressbar");
+const percent=document.getElementById("percent");
+const emojis=["🔥","⚡","🎮","🚀"];
+
+const loading=setInterval(()=>{
+ progress+=2;
+ if(progress>100) progress=100;
+ bar.style.width=progress+"%";
+ percent.textContent=progress+"%";
+ document.getElementById("loaderEmoji").textContent=
+  emojis[Math.floor(progress/26)%emojis.length];
+
+ if(progress>=100){
+  clearInterval(loading);
+  setTimeout(()=>{
+   const loader=document.getElementById("loader");
+   loader.style.opacity="0";
+   setTimeout(()=>loader.remove(),500);
+  },300);
  }
-
- currentNick = nick;
- showProfile();
-}
-
-function showProfile() {
- $("playerNick").textContent = currentNick;
-
- const isDeveloper =
-  currentNick.toLowerCase() === "wells_ohhotnik";
-
- $("rank").textContent = isDeveloper
-  ? "👑 Главный разработчик"
-  : "🎮 Игрок";
-
- $("developer").style.display =
-  isDeveloper ? "block" : "none";
-
- $("profile").style.display = "block";
- $("loginNav").style.display = "none";
- $("logoutNav").classList.remove("hidden");
-
- $("auth").style.display = "none";
- page("home");
-}
-
-function logout() {
- currentNick = "";
- $("profile").style.display = "none";
- $("developer").style.display = "none";
- $("loginNav").style.display = "inline-block";
- $("logoutNav").classList.add("hidden");
- page("home");
-}
-
-// Экран загрузки
-const emojis = ["🚗","🏙️","🔥","🎮","🏎️","⭐"];
-let progress = 0;
-
-const timer = setInterval(() => {
- progress += 5;
-
- $("progress").style.width = progress + "%";
- $("emoji").textContent =
-  emojis[Math.floor(Math.random() * emojis.length)];
-
- if (progress >= 100) {
-  clearInterval(timer);
-
-  $("loading").style.opacity = "0";
-
-  setTimeout(() => {
-   $("loading").remove();
-  }, 500);
- }
-}, 100);
+},35);
 </script>
 
 </body>
