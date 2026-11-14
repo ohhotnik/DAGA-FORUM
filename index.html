@@ -9,108 +9,30 @@
 
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- background:#101113;
- color:#eee;
- font-family:Arial,sans-serif
-}
-header{
- background:#191a1d;
- border-bottom:2px solid #ff7900;
- padding:18px;
- display:flex;
- justify-content:space-between;
- align-items:center
-}
-.logo{font-size:23px;font-weight:bold;color:#ff7900}
-button{
- background:#ff7900;
- color:#fff;
- border:0;
- padding:11px 16px;
- border-radius:6px;
- font-weight:bold;
- cursor:pointer
-}
-nav{
- background:#1c1d20;
- padding:14px;
- display:flex;
- gap:20px;
- flex-wrap:wrap
-}
-nav a{color:#ddd;text-decoration:none}
-nav a:hover{color:#ff7900}
-.container{max-width:1050px;margin:25px auto;padding:0 15px}
-.welcome{
- background:linear-gradient(120deg,#292018,#171719);
- border:1px solid #49301d;
- padding:25px;
- border-radius:10px;
- margin-bottom:25px
-}
-h1{color:#ff7900;margin-top:0}
+body{margin:0;background:#101113;color:#eee;font-family:Arial,sans-serif}
+header{background:#191a1d;padding:17px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #ff7900}
+.logo{font-size:21px;font-weight:bold;color:#ff8500}
+button{background:#ff7900;color:white;border:0;padding:11px 15px;border-radius:6px;cursor:pointer;font-weight:bold}
+nav{background:#1b1c20;padding:14px;display:flex;gap:20px;overflow:auto}
+nav a{color:white;text-decoration:none;white-space:nowrap}
+nav a:hover{color:#ff8500}
+.container{max-width:950px;margin:20px auto;padding:0 13px}
+.welcome{background:linear-gradient(120deg,#332216,#1b1b1e);padding:23px;border-radius:10px;border:1px solid #50351e;margin-bottom:25px}
+h1{color:#ff8500}
 h2{font-size:19px}
-.category{
- background:#1b1c1f;
- border:1px solid #303135;
- border-radius:8px;
- margin-bottom:12px;
- padding:17px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px
-}
+.section-title{background:#27282c;padding:14px;border-left:4px solid #ff7900;margin:15px 0;font-weight:bold}
+.category{background:#1b1c20;border:1px solid #303135;border-radius:9px;padding:17px;margin:10px 0;cursor:pointer}
 .category:hover{border-color:#ff7900}
-.category h3{margin:0 0 7px;color:#ff9a35}
+.category h3{margin:0 0 8px;color:#ff9a35}
 .category p{margin:0;color:#aaa;font-size:13px}
-.count{color:#aaa;font-size:13px}
-.section-title{
- background:#27282c;
- padding:14px;
- border-left:4px solid #ff7900;
- margin-bottom:12px;
- font-weight:bold
-}
-footer{
- text-align:center;
- color:#777;
- padding:30px;
- border-top:1px solid #303135;
- margin-top:40px
-}
-.modal{
- display:none;
- position:fixed;
- inset:0;
- background:#000b;
- align-items:center;
- justify-content:center;
- padding:15px
-}
-.modal-box{
- background:#202125;
- padding:25px;
- border-radius:10px;
- width:100%;
- max-width:350px
-}
-input{
- width:100%;
- padding:12px;
- margin:8px 0;
- background:#111214;
- border:1px solid #444;
- border-radius:5px;
- color:white
-}
-.close{float:right;background:#444}
-@media(max-width:500px){
- .logo{font-size:19px}
- .category{align-items:flex-start}
-}
+input,textarea{width:100%;padding:13px;margin:8px 0;background:#151619;color:white;border:1px solid #444;border-radius:6px}
+textarea{min-height:100px;resize:vertical}
+.topic{background:#1d1e22;padding:15px;border-radius:8px;margin:12px 0;border:1px solid #333}
+.topic h3{color:#ff9a35;margin-top:0}
+.muted{color:#999;font-size:12px}
+.hidden{display:none}
+.back{background:#35363b;margin-bottom:15px}
+footer{text-align:center;color:#777;padding:30px;margin-top:35px}
 </style>
 </head>
 
@@ -118,122 +40,250 @@ input{
 
 <header>
  <div class="logo">🔥 KARATEL TEST</div>
- <button onclick="openModal('Вход')">Войти</button>
+ <button onclick="profile()">Профиль</button>
 </header>
 
 <nav>
- <a href="#">Главная</a>
- <a href="#forum">Форум</a>
+ <a href="#" onclick="home()">Главная</a>
+ <a href="#" onclick="home()">Форум</a>
  <a href="#about">О проекте</a>
- <a href="#footer">Контакты</a>
 </nav>
 
 <main class="container">
 
- <section class="welcome">
+<div id="homePage">
+
+ <div class="welcome">
   <h1>KARATEL TEST</h1>
-  <p>Добро пожаловать на форум игрового проекта KARATEL TEST!</p>
-  <p>Общение, новости, обсуждения и игровое сообщество.</p>
-  <button onclick="openModal('Регистрация')">Регистрация</button>
- </section>
+  <p>Добро пожаловать на форум нашего проекта!</p>
+  <p>Общайся, создавай темы и участвуй в жизни проекта.</p>
+  <button onclick="profile()">Мой профиль</button>
+ </div>
 
- <section id="forum">
-  <h2>Форум проекта</h2>
+ <h2>Форум проекта</h2>
 
-  <div class="section-title">📢 ИНФОРМАЦИЯ</div>
+ <div class="section-title">📢 ИНФОРМАЦИЯ</div>
 
-  <div class="category">
-   <div>
-    <h3>Новости проекта</h3>
-    <p>Последние новости и обновления KARATEL TEST</p>
-   </div>
-   <span class="count">Новости</span>
-  </div>
+ <div class="category" onclick="openSection('Новости проекта')">
+  <h3>Новости проекта</h3>
+  <p>Последние новости и обновления KARATEL TEST</p>
+ </div>
 
-  <div class="category">
-   <div>
-    <h3>Правила проекта</h3>
-    <p>Правила сервера и форума</p>
-   </div>
-   <span class="count">Правила</span>
-  </div>
+ <div class="category" onclick="openSection('Правила проекта')">
+  <h3>Правила проекта</h3>
+  <p>Правила сервера и форума</p>
+ </div>
 
-  <div class="section-title">💬 ОБЩЕНИЕ</div>
+ <div class="section-title">💬 ОБЩЕНИЕ</div>
 
-  <div class="category">
-   <div>
-    <h3>Общий раздел</h3>
-    <p>Общение участников проекта</p>
-   </div>
-   <span class="count">Форум</span>
-  </div>
+ <div class="category" onclick="openSection('Общий раздел')">
+  <h3>Общий раздел</h3>
+  <p>Общение участников проекта</p>
+ </div>
 
-  <div class="category">
-   <div>
-    <h3>Жалобы</h3>
-    <p>Жалобы на игроков и администрацию</p>
-   </div>
-   <span class="count">Поддержка</span>
-  </div>
+ <div class="category" onclick="openSection('Жалобы')">
+  <h3>Жалобы</h3>
+  <p>Жалобы на игроков и администрацию</p>
+ </div>
 
-  <div class="category">
-   <div>
-    <h3>Предложения</h3>
-    <p>Идеи и предложения по улучшению проекта</p>
-   </div>
-   <span class="count">Идеи</span>
-  </div>
+ <div class="category" onclick="openSection('Предложения')">
+  <h3>Предложения</h3>
+  <p>Идеи по улучшению проекта</p>
+ </div>
 
-  <div class="section-title">🎮 ИГРОВОЙ РАЗДЕЛ</div>
+ <div class="section-title">🎮 ИГРОВОЙ РАЗДЕЛ</div>
 
-  <div class="category">
-   <div>
-    <h3>Игровые вопросы</h3>
-    <p>Вопросы по игровому процессу</p>
-   </div>
-   <span class="count">Игра</span>
-  </div>
+ <div class="category" onclick="openSection('Игровые вопросы')">
+  <h3>Игровые вопросы</h3>
+  <p>Вопросы по игровому процессу</p>
+ </div>
 
-  <div class="category">
-   <div>
-    <h3>Государственные организации</h3>
-    <p>Обсуждение организаций проекта</p>
-   </div>
-   <span class="count">Организации</span>
-  </div>
- </section>
+ <div class="category" onclick="openSection('Организации')">
+  <h3>Государственные организации</h3>
+  <p>Обсуждение организаций проекта</p>
+ </div>
 
- <section id="about">
-  <h2>О KARATEL TEST</h2>
-  <p>Официальное сообщество игрового проекта KARATEL TEST.</p>
- </section>
+</div>
+
+<div id="sectionPage" class="hidden">
+ <button class="back" onclick="home()">← Назад</button>
+ <h2 id="sectionTitle"></h2>
+ <button onclick="newTopic()">+ Создать тему</button>
+ <div id="topics"></div>
+</div>
+
+<div id="topicPage" class="hidden">
+ <button class="back" onclick="backSection()">← Назад</button>
+ <div id="topicContent"></div>
+ <h3>Ответить</h3>
+ <textarea id="replyText" placeholder="Напиши сообщение..."></textarea>
+ <button onclick="sendReply()">Отправить</button>
+</div>
+
+<div id="profilePage" class="hidden">
+ <button class="back" onclick="home()">← Назад</button>
+ <h2>Мой профиль</h2>
+ <p id="currentUser"></p>
+ <input id="nickname" placeholder="Введите ваш никнейм">
+ <button onclick="saveProfile()">Сохранить никнейм</button>
+</div>
+
+<div id="about">
+ <h2>О проекте</h2>
+ <p>KARATEL TEST — игровое сообщество.</p>
+</div>
 
 </main>
 
-<footer id="footer">
- © 2026 KARATEL TEST. Все права защищены.
-</footer>
-
-<div class="modal" id="modal">
- <div class="modal-box">
-  <button class="close" onclick="closeModal()">Закрыть</button>
-  <h2 id="modalTitle">Вход</h2>
-  <input placeholder="Ваш логин">
-  <input type="password" placeholder="Пароль">
-  <button onclick="alert('Авторизация пока не подключена')">
-   Продолжить
-  </button>
- </div>
-</div>
+<footer>© 2026 KARATEL TEST</footer>
 
 <script>
-function openModal(title){
- document.getElementById('modalTitle').textContent=title;
- document.getElementById('modal').style.display='flex';
+let user=localStorage.getItem("karatel_user")||"Гость";
+let section="";
+let activeTopic=-1;
+
+let topics=JSON.parse(localStorage.getItem("karatel_topics")||"[]");
+
+function saveTopics(){
+ localStorage.setItem("karatel_topics",JSON.stringify(topics));
 }
-function closeModal(){
- document.getElementById('modal').style.display='none';
+
+function hideAll(){
+ ["homePage","sectionPage","topicPage","profilePage"].forEach(id=>{
+  document.getElementById(id).classList.add("hidden");
+ });
 }
+
+function home(){
+ hideAll();
+ document.getElementById("homePage").classList.remove("hidden");
+}
+
+function openSection(name){
+ section=name;
+ hideAll();
+ document.getElementById("sectionPage").classList.remove("hidden");
+ document.getElementById("sectionTitle").textContent=name;
+ renderTopics();
+}
+
+function renderTopics(){
+ let box=document.getElementById("topics");
+ box.innerHTML="";
+ let found=topics.map((t,i)=>({...t,index:i})).filter(t=>t.section===section);
+
+ if(found.length===0){
+  box.innerHTML="<p class='muted'>Пока нет тем. Создай первую!</p>";
+ }
+
+ found.forEach(t=>{
+  let div=document.createElement("div");
+  div.className="topic";
+  let title=document.createElement("h3");
+  title.textContent=t.title;
+  let author=document.createElement("p");
+  author.className="muted";
+  author.textContent="Автор: "+t.author;
+  let open=document.createElement("button");
+  open.textContent="Открыть тему";
+  open.onclick=()=>openTopic(t.index);
+  div.append(title,author,open);
+  box.appendChild(div);
+ });
+}
+
+function newTopic(){
+ let title=prompt("Название темы:");
+ if(!title||!title.trim())return;
+ let message=prompt("Текст темы:");
+ if(!message||!message.trim())return;
+
+ topics.push({
+  section:section,
+  title:title.trim(),
+  author:user,
+  message:message.trim(),
+  replies:[]
+ });
+
+ saveTopics();
+ renderTopics();
+}
+
+function openTopic(index){
+ activeTopic=index;
+ hideAll();
+ document.getElementById("topicPage").classList.remove("hidden");
+ renderTopic();
+}
+
+function renderTopic(){
+ let t=topics[activeTopic];
+ let box=document.getElementById("topicContent");
+ box.innerHTML="";
+
+ let title=document.createElement("h2");
+ title.textContent=t.title;
+ let author=document.createElement("p");
+ author.className="muted";
+ author.textContent="Автор: "+t.author;
+ let message=document.createElement("div");
+ message.className="topic";
+ message.textContent=t.message;
+ box.append(title,author,message);
+
+ t.replies.forEach(r=>{
+  let reply=document.createElement("div");
+  reply.className="topic";
+  let name=document.createElement("b");
+  name.style.color="#ff9a35";
+  name.textContent=r.author;
+  let text=document.createElement("p");
+  text.textContent=r.text;
+  reply.append(name,text);
+  box.appendChild(reply);
+ });
+}
+
+function sendReply(){
+ let input=document.getElementById("replyText");
+ let value=input.value.trim();
+ if(!value)return;
+
+ topics[activeTopic].replies.push({
+  author:user,
+  text:value
+ });
+
+ saveTopics();
+ input.value="";
+ renderTopic();
+}
+
+function backSection(){
+ openSection(section);
+}
+
+function profile(){
+ hideAll();
+ document.getElementById("profilePage").classList.remove("hidden");
+ document.getElementById("currentUser").textContent="Текущий никнейм: "+user;
+ document.getElementById("nickname").value=user==="Гость"?"":user;
+}
+
+function saveProfile(){
+ let name=document.getElementById("nickname").value.trim();
+ if(!name){
+  alert("Введите никнейм");
+  return;
+ }
+ user=name;
+ localStorage.setItem("karatel_user",user);
+ document.getElementById("currentUser").textContent="Текущий никнейм: "+user;
+ alert("Никнейм сохранён!");
+}
+
+home();
 </script>
 
 </body>
