@@ -3,280 +3,352 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>KARATEL TEST</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b0b0e;color:white;font-family:Arial}
-header{background:#171717;padding:18px;border-bottom:2px solid #ff7900}
-h1,h2{color:#ff7900}
-button,input,textarea,select{width:100%;padding:12px;margin:5px 0;border-radius:8px;border:1px solid #ff7900;background:#202020;color:white}
-button{background:#ff7900;color:white;font-weight:bold}
-nav{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:10px}
-.card{background:#181818;padding:15px;margin:12px;border:1px solid #393939;border-radius:12px}
+body{margin:0;background:#0b0d12;color:#eee;font-family:Arial}
+header{text-align:center;padding:20px;background:#151923;border-bottom:2px solid #ff8500}
+header h1{color:#ff8500;margin:0}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:12px;background:#111722}
+button{padding:11px 14px;background:#252e3c;color:white;border:1px solid #465064;border-radius:7px;cursor:pointer}
+button:hover{background:#ff8500;color:#111}
+main{max-width:1000px;margin:auto;padding:15px}
+section{display:none}
+section.active{display:block}
+h2{color:#ff8500}
+.card{background:#171e29;border:1px solid #303b4d;border-radius:10px;padding:15px;margin:10px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+input,textarea,select{width:100%;padding:12px;margin:7px 0;background:#10151e;color:white;border:1px solid #465064;border-radius:7px}
+textarea{min-height:90px}
+.small{color:#999;font-size:13px}
 .hidden{display:none!important}
-#loader{position:fixed;inset:0;background:#080808;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.bar{width:220px;height:6px;background:#333}
-#progress{height:6px;background:#ff7900;animation:load 1.5s forwards}
-@keyframes load{to{width:100%}}
+#notice{padding:10px;color:#ffb36b;text-align:center}
+#loader{position:fixed;inset:0;background:#090b10;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column}
+#loader h1{color:#ff8500}
+.track{width:260px;height:12px;background:#292929;border-radius:20px;overflow:hidden}
+#progress{height:100%;width:0;background:#ff8500;transition:width .1s}
 </style>
 </head>
 <body>
 
 <div id="loader">
 <h1>KARATEL TEST</h1>
-<div class="bar"><div id="progress"></div></div>
 <p>Загрузка форума...</p>
+<div class="track"><div id="progress"></div></div>
+<p id="percent">0%</p>
 </div>
 
 <header>
 <h1>KARATEL TEST</h1>
-BLACK RUSSIA ROLEPLAY
+<p>BLACK RUSSIA • ФОРУМ</p>
 </header>
 
-<section id="auth" class="card hidden">
-<h2>Вход и регистрация</h2>
-<input id="email" type="email" placeholder="Email">
-<input id="password" type="password" placeholder="Пароль">
-<input id="nickname" placeholder="Игровой ник">
-<button id="register">Регистрация</button>
-<button id="login">Войти</button>
-<p id="authMessage"></p>
-</section>
-
-<div id="app" class="hidden">
 <nav>
-<button onclick="page('home')">Главная</button>
-<button onclick="page('forum')">Форум</button>
-<button onclick="page('players')">Игроки</button>
-<button onclick="page('profile')">Профиль</button>
-<button id="adminBtn" class="hidden" onclick="page('admin')">Администрация</button>
-<button id="devBtn" class="hidden" onclick="page('developer')">Разработчик</button>
+<button onclick="show('home')">Главная</button>
+<button onclick="show('state')">Государство</button>
+<button onclick="show('crime')">Криминал</button>
+<button onclick="show('forum')">Форум</button>
+<button onclick="show('players')">Игроки</button>
+<button onclick="show('profile')">Профиль</button>
+<button onclick="show('admin')">Администрация</button>
+<button id="devButton" class="hidden" onclick="show('developer')">Разработчик</button>
 <button onclick="logout()">Выйти</button>
 </nav>
 
+<div id="notice"></div>
+
 <main>
-<section id="home" class="card">
-<h2>Добро пожаловать!</h2>
-<p>Форум KARATEL TEST</p>
+
+<section id="login" class="active">
+<div class="card">
+<h2>Вход на форум</h2>
+<input id="loginNick" placeholder="Введите никнейм">
+<button onclick="login()">Войти</button>
+<p class="small">Демонстрационная версия без базы данных.</p>
+</div>
 </section>
 
-<section id="forum" class="card hidden">
+<section id="home">
+<h2>Главная</h2>
+<div class="card">
+<h3>Добро пожаловать на KARATEL TEST!</h3>
+<p>Форум государственных и криминальных организаций.</p>
+</div>
+<div class="grid">
+<div class="card"><h3>Государство</h3><button onclick="show('state')">Открыть</button></div>
+<div class="card"><h3>Криминал</h3><button onclick="show('crime')">Открыть</button></div>
+<div class="card"><h3>Форум</h3><button onclick="show('forum')">Открыть</button></div>
+</div>
+</section>
+
+<section id="state">
+<h2>Государственные организации</h2>
+<div id="stateList" class="grid"></div>
+</section>
+
+<section id="crime">
+<h2>Криминальные организации</h2>
+<div id="crimeList" class="grid"></div>
+</section>
+
+<section id="org">
+<button onclick="show('state')">Назад</button>
+<div class="card">
+<h2 id="orgName"></h2>
+<p>Раздел организации</p>
+<h3>Информация</h3>
+<p>Новости • Устав • Объявления • Состав</p>
+<h3>Должности</h3>
+<p>Стажёр • Сотрудник • Старший сотрудник • Заместитель • Руководитель</p>
+</div>
+</section>
+
+<section id="forum">
 <h2>Форум</h2>
-<h3>Государственные организации</h3>
-<p>ГИБДД · МВД · Армия · Больница · Правительство · СМИ</p>
-<h3>Криминальные организации</h3>
-<p>ОПГ Лыткарино · ОПГ Арзамас · ОПГ Батыровка</p>
+<div class="card">
 <h3>Создать тему</h3>
 <input id="topicTitle" placeholder="Название темы">
-<textarea id="topicText" placeholder="Текст темы"></textarea>
-<button id="createTopic">Создать тему</button>
-<p id="topicMessage"></p>
+<textarea id="topicText" placeholder="Текст сообщения"></textarea>
+<button onclick="addTopic()">Опубликовать</button>
+</div>
 <div id="topics"></div>
 </section>
 
-<section id="players" class="card hidden">
+<section id="players">
 <h2>Игроки</h2>
-<div id="playerList"></div>
+<div id="playersList"></div>
 </section>
 
-<section id="profile" class="card hidden">
+<section id="profile">
 <h2>Мой профиль</h2>
-<input id="newNick" placeholder="Новый ник">
-<button id="saveProfile">Сохранить профиль</button>
-<div id="myProfile"></div>
-</section>
-
-<section id="admin" class="card hidden">
-<h2>Администрация</h2>
-<input id="targetUid" placeholder="UID игрока">
-<select id="rank">
-<option>Игрок</option>
-<option>VIP</option>
-<option>Модератор</option>
-<option>Администратор</option>
-<option>Главный администратор</option>
-</select>
-<input id="title" placeholder="Титул игрока">
-<button id="giveTitle">Выдать титул</button>
-<p id="adminMessage"></p>
-</section>
-
-<section id="developer" class="card hidden">
-<h2>Панель разработчика</h2>
-<h3>Wells_ohhotnik</h3>
-<p>Главный разработчик</p>
-</section>
-</main>
+<div class="card">
+<p>Ник: <b id="myNick"></b></p>
+<p>Ранг: <b id="myRank"></b></p>
+<p>Титул: <b id="myTitle"></b></p>
+<p>Организация: <b>Не состоит</b></p>
 </div>
+</section>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-import {
- getAuth, createUserWithEmailAndPassword,
- signInWithEmailAndPassword, signOut,
- onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
-import {
- getDatabase, ref, get, set, push, onValue,
- serverTimestamp
-} from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+<section id="admin">
+<h2>Администрация</h2>
+<div class="card">
+<p>Модератор</p>
+<p>Администратор</p>
+<p>Старший администратор</p>
+<p>Главный администратор</p>
+</div>
+</section>
 
-const firebaseConfig = {
- apiKey: "AIzaSyArqx-dZ_RCj34CWV92WibEgJQ1USkXr2M",
- authDomain: "forum-148a4.firebaseapp.com",
- databaseURL: "https://forum-148a4-default-rtdb.firebaseio.com",
- projectId: "forum-148a4",
- storageBucket: "forum-148a4.firebasestorage.app",
- messagingSenderId: "1054277351501",
- appId: "1:1054277351501:web:653af5526d39489e5e0404",
- measurementId: "G-D6JYX90THH"
-};
+<section id="developer">
+<h2>Панель разработчика</h2>
+<div class="card">
+<h3 style="color:#ff8500">Wells_ohhotnik</h3>
+<p>Титул: Главный разработчик</p>
+<p>Ранг: Разработчик</p>
+<hr>
+<h3>Добавить организацию</h3>
+<select id="orgType">
+<option value="state">Государственная</option>
+<option value="crime">Криминальная</option>
+</select>
+<input id="newOrg" placeholder="Название организации">
+<button onclick="addOrg()">Добавить организацию</button>
+<hr>
+<h3>Управление форумом</h3>
+<button onclick="clearTopics()">Удалить все темы</button>
+</div>
+</section>
 
-const appFirebase = initializeApp(firebaseConfig);
-const auth = getAuth(appFirebase);
-const db = getDatabase(appFirebase);
-const $ = id => document.getElementById(id);
-let currentUser = null;
-let currentRole = "player";
+</main>
 
-function message(id,text){$(id).textContent=text}
+<script>
+const DEV="Wells_ohhotnik";
 
-window.page = id => {
- document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
- $(id).classList.remove("hidden");
-};
-window.logout = () => signOut(auth);
-
-$("register").onclick = async()=>{
- try{
-  const credential = await createUserWithEmailAndPassword(auth,$("email").value,$("password").value);
-  const nick = $("nickname").value.trim();
-  if(nick.length<3) throw new Error("Ник должен содержать минимум 3 символа");
-  await set(ref(db,"profiles/"+credential.user.uid),{
-   nickname:nick,rank:"Игрок",title:"Игрок",createdAt:Date.now()
-  });
- }catch(e){message("authMessage",e.message)}
-};
-
-$("login").onclick = async()=>{
- try{
-  await signInWithEmailAndPassword(auth,$("email").value,$("password").value);
- }catch(e){message("authMessage",e.message)}
-};
-
-onAuthStateChanged(auth,async user=>{
- $("loader").classList.remove("hidden");
- currentUser=user;
- if(!user){
-  $("app").classList.add("hidden");
-  $("auth").classList.remove("hidden");
-  $("loader").classList.add("hidden");
-  return;
- }
- try{
-  const roleSnap=await get(ref(db,"staff/"+user.uid));
-  currentRole=roleSnap.exists()?roleSnap.val().role:"player";
-  $("auth").classList.add("hidden");
-  $("app").classList.remove("hidden");
-  $("devBtn").classList.toggle("hidden",currentRole!=="developer");
-  $("adminBtn").classList.toggle("hidden",!["developer","admin"].includes(currentRole));
-  await loadProfile();
-  loadPlayers();
-  loadTopics();
- }catch(e){
-  message("authMessage","Ошибка загрузки базы: "+e.message);
- }
- $("loader").classList.add("hidden");
-});
-
-async function loadProfile(){
- const snap=await get(ref(db,"profiles/"+currentUser.uid));
- const p=snap.val()||{};
- $("myProfile").textContent=
- "Ник: "+(p.nickname||"Игрок")+" | Ранг: "+(p.rank||"Игрок")+
- " | Титул: "+(p.title||"Игрок");
- $("newNick").value=p.nickname||"";
+function getData(key,fallback){
+ try{return JSON.parse(localStorage.getItem(key))||fallback}
+ catch(e){return fallback}
 }
 
-$("saveProfile").onclick=async()=>{
- const nick=$("newNick").value.trim();
- if(nick.length<3){message("myProfile","Ник слишком короткий");return}
- await set(ref(db,"profiles/"+currentUser.uid+"/nickname"),nick);
- await loadProfile();
-};
+let stateOrgs=getData("kt_state",[
+"ГИБДД","УМВД","Армия","Больница","Правительство","СМИ"
+]);
+let crimeOrgs=getData("kt_crime",[
+"ОПГ Лыткарино","ОПГ Арзамас","ОПГ Батыровка"
+]);
+let topics=getData("kt_topics",[]);
+let players=getData("kt_players",[]);
+let current=localStorage.getItem("kt_nick")||"";
 
-function loadPlayers(){
- onValue(ref(db,"profiles"),snap=>{
-  $("playerList").innerHTML="";
-  snap.forEach(child=>{
-   const p=child.val();
-   const card=document.createElement("div");
-   card.className="card";
-   const name=document.createElement("b");
-   name.textContent=p.nickname||"Игрок";
-   const info=document.createElement("p");
-   info.textContent=(p.title||"Игрок")+" · "+(p.rank||"Игрок");
-   card.append(name,info);
-   $("playerList").append(card);
-  });
+function save(){
+ localStorage.setItem("kt_state",JSON.stringify(stateOrgs));
+ localStorage.setItem("kt_crime",JSON.stringify(crimeOrgs));
+ localStorage.setItem("kt_topics",JSON.stringify(topics));
+ localStorage.setItem("kt_players",JSON.stringify(players));
+}
+
+function msg(text){
+ document.getElementById("notice").textContent=text;
+}
+
+function show(id){
+ if(!current&&id!=="login"){
+  msg("Сначала войдите на форум.");
+  return;
+ }
+ document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ if(id==="state")renderOrgs("state");
+ if(id==="crime")renderOrgs("crime");
+ if(id==="forum")renderTopics();
+ if(id==="players")renderPlayers();
+ if(id==="profile")renderProfile();
+}
+
+function login(){
+ let nick=document.getElementById("loginNick").value.trim();
+ if(nick.length<3){msg("Ник должен содержать минимум 3 символа.");return}
+ current=nick;
+ localStorage.setItem("kt_nick",nick);
+ if(!players.includes(nick))players.push(nick);
+ save();
+ updateMenu();
+ show("home");
+ msg("Вы вошли как "+nick);
+}
+
+function logout(){
+ current="";
+ localStorage.removeItem("kt_nick");
+ updateMenu();
+ show("login");
+ msg("Вы вышли из аккаунта.");
+}
+
+function updateMenu(){
+ document.getElementById("devButton").classList.toggle("hidden",current!==DEV);
+}
+
+function renderOrgs(type){
+ let list=type==="state"?stateOrgs:crimeOrgs;
+ let box=document.getElementById(type==="state"?"stateList":"crimeList");
+ box.innerHTML="";
+ list.forEach(name=>{
+  let div=document.createElement("div");
+  div.className="card";
+  let h=document.createElement("h3");
+  h.textContent=name;
+  let p=document.createElement("p");
+  p.textContent="Организация KARATEL TEST";
+  let b=document.createElement("button");
+  b.textContent="Открыть раздел";
+  b.onclick=()=>{
+   document.getElementById("orgName").textContent=name;
+   show("org");
+  };
+  div.append(h,p,b);
+  box.appendChild(div);
  });
 }
 
-$("createTopic").onclick=async()=>{
- const title=$("topicTitle").value.trim();
- const body=$("topicText").value.trim();
- if(!title||!body){message("topicMessage","Заполни название и текст");return}
- try{
-  await push(ref(db,"topics"),{
-   title,body,authorUid:currentUser.uid,
-   author:currentUser.email,createdAt:Date.now()
-  });
-  $("topicTitle").value="";
-  $("topicText").value="";
-  message("topicMessage","Тема создана");
- }catch(e){message("topicMessage","Не удалось создать тему: "+e.message)}
-};
+function addOrg(){
+ if(current!==DEV){msg("Нет доступа.");return}
+ let name=document.getElementById("newOrg").value.trim();
+ if(!name)return;
+ if(document.getElementById("orgType").value==="state")stateOrgs.push(name);
+ else crimeOrgs.push(name);
+ save();
+ document.getElementById("newOrg").value="";
+ renderOrgs(document.getElementById("orgType").value);
+ msg("Организация добавлена.");
+}
 
-function loadTopics(){
- onValue(ref(db,"topics"),snap=>{
-  $("topics").innerHTML="";
-  snap.forEach(child=>{
-   const t=child.val();
-   const card=document.createElement("div");
-   card.className="card";
-   const heading=document.createElement("h3");
-   heading.textContent=t.title||"Тема";
-   const body=document.createElement("p");
-   body.textContent=t.body||"";
-   const author=document.createElement("small");
-   author.textContent="Автор: "+(t.author||"Игрок");
-   card.append(heading,body,author);
-   if(currentRole==="developer"||currentRole==="admin"){
-    const del=document.createElement("button");
-    del.textContent="Удалить тему";
-    del.onclick=async()=>{await set(ref(db,"topics/"+child.key),null)};
-    card.append(del);
-   }
-   $("topics").append(card);
-  });
+function addTopic(){
+ let title=document.getElementById("topicTitle").value.trim();
+ let body=document.getElementById("topicText").value.trim();
+ if(!title||!body){msg("Заполните все поля.");return}
+ topics.unshift({id:Date.now(),title,body,author:current});
+ save();
+ document.getElementById("topicTitle").value="";
+ document.getElementById("topicText").value="";
+ renderTopics();
+ msg("Тема опубликована.");
+}
+
+function renderTopics(){
+ let box=document.getElementById("topics");
+ box.innerHTML="";
+ if(!topics.length){box.textContent="Тем пока нет.";return}
+ topics.forEach(t=>{
+  let div=document.createElement("div");
+  div.className="card";
+  let h=document.createElement("h3");
+  h.textContent=t.title;
+  let p=document.createElement("p");
+  p.textContent=t.body;
+  let small=document.createElement("p");
+  small.className="small";
+  small.textContent="Автор: "+t.author;
+  div.append(h,p,small);
+  if(current===DEV){
+   let b=document.createElement("button");
+   b.textContent="Удалить тему";
+   b.onclick=()=>{
+    topics=topics.filter(x=>x.id!==t.id);
+    save();
+    renderTopics();
+   };
+   div.appendChild(b);
+  }
+  box.appendChild(div);
  });
 }
 
-$("giveTitle").onclick=async()=>{
- if(currentRole!=="developer"){
-  message("adminMessage","Выдавать титулы может только разработчик");
-  return;
+function clearTopics(){
+ if(current!==DEV){msg("Нет доступа.");return}
+ if(confirm("Удалить все темы?")){
+  topics=[];
+  save();
+  renderTopics();
  }
- const uid=$("targetUid").value.trim();
- if(!uid){message("adminMessage","Введи UID игрока");return}
- message("adminMessage","Для безопасной выдачи рангов нужна серверная функция Firebase.");
-};
+}
 
-setTimeout(()=>{
- $("loader").classList.add("hidden");
- if(!currentUser)$("auth").classList.remove("hidden");
-},1800);
+function renderPlayers(){
+ let box=document.getElementById("playersList");
+ box.innerHTML="";
+ players.forEach(n=>{
+  let div=document.createElement("div");
+  div.className="card";
+  div.textContent=n;
+  box.appendChild(div);
+ });
+}
+
+function renderProfile(){
+ document.getElementById("myNick").textContent=current;
+ document.getElementById("myRank").textContent=current===DEV?"Разработчик":"Игрок";
+ document.getElementById("myTitle").textContent=current===DEV?"Главный разработчик":"Участник форума";
+}
+
+updateMenu();
+if(current){
+ if(!players.includes(current))players.push(current);
+ save();
+ show("home");
+}else{
+ show("login");
+}
+
+let progress=0;
+let loaderTimer=setInterval(()=>{
+ progress=Math.min(progress+2,100);
+ document.getElementById("progress").style.width=progress+"%";
+ document.getElementById("percent").textContent=progress+"%";
+ if(progress>=100){
+  clearInterval(loaderTimer);
+  document.getElementById("loader").style.display="none";
+ }
+},40);
 </script>
 </body>
 </html>
