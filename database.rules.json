@@ -1,0 +1,24 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "topics": {
+      ".read": true,
+      ".indexOn": ["createdAt"],
+      "$topicId": {
+        ".write": "auth != null && ((!data.exists() && newData.child('authorUid').val() === auth.uid) || (data.exists() && data.child('authorUid').val() === auth.uid))",
+        "comments": {
+          "$commentId": {
+            ".write": "auth != null && !data.exists() && newData.child('authorUid').val() === auth.uid"
+          }
+        }
+      }
+    },
+    "users": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "auth != null && auth.uid === $uid"
+      }
+    }
+  }
+}
